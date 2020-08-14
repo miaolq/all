@@ -6,4 +6,15 @@
    还支持覆盖其他 eslint 插件的规则如： "prettier/react"来覆盖 eslint-plugin-react
    If you extend a config which uses a plugin, it is recommended to add "prettier/that-plugin" (if available). For example, eslint-config-airbnb enables eslint-plugin-react rules, so "prettier/react" is needed:
 
-   检测项目中eslint 和 prettier冲突的地方 npx eslint-config-prettier-check
+   检测项目中 eslint 和 prettier 冲突的地方 npx eslint-config-prettier-check
+   npx eslint --print-config index.js | npx eslint-config-prettier-check
+   0: No problems found.
+   1: Unexpected error.
+   2: Conflicting rules found.
+
+eslint-plugin-prettier 用于在 linter 里面跑 prettier，把 prettier 的配置当成了 linter。 现在不再推荐使用，直接执行 prettier --check .就好。大多数编辑器已支持
+
+可以试试
+prettier-eslint
+prettier-tslint
+prettier-stylelint
