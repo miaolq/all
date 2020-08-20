@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     browser: true, // 浏览器环境，会允许使用window等全局变量
     es2020: true, // 支持es2020支持的全局变量，如Set，Map。 也会自动支持es2020的语法
@@ -27,4 +28,7 @@ module.exports = {
   rules: {
     "react/jsx-filename-extension": "off",
   },
+  // ignorePattern ignorePath excludedFiles Unexpected top-level property "excludedFiles".
+  // ignorePattern: ["/dist/*.js"],
+  // excludedFiles: ["/dist/*.js"],
 };
