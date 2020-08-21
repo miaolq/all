@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development", // none 默认production
-  devtool: "inline-source-map",
+  // devtool: "inline-source-map",
   devServer: {
     contentBase: "./dist",
   },
@@ -13,20 +13,21 @@ module.exports = {
     print: "./src/print.js",
   },
   output: {
-    filename: "[name].js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"), // 得是绝对路径
     // publicPath: "/",  // 资源的url的前缀默认是当前目录
   },
   optimization: {
     // 代码分割
-    splitChunks: {
-      chunks: "all",
-    },
+    // splitChunks: {
+    //   chunks: "all",
+    // },
+    runtimeChunk: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({ title: "hello" }),
-    new HtmlWebpackPlugin({ title: "hello", filename: "index2.html" }),
+    // HtmlWebpackPlugin默认使用ejs loader . 支持lodash template语法
+    new HtmlWebpackPlugin({ template: "./public/index.html" }),
   ],
   module: {
     rules: [

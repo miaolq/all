@@ -1,3 +1,3 @@
 import _ from "lodash";
 
-console.log("printsssa", _);
+window._ = _;

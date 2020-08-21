@@ -1,10 +1,31 @@
 # polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集
+
+
+测试： f2etest  wetest testin
+
+todo : 提取react
+
+todo: CommonsChunkPlugin的问题， 新splitChunkPlugin配置 runTimeChunk? https://developers.google.com/web/fundamentals/performance/webpack/use-long-term-caching
+
+tc39
+question: 
+需要在babel-loader中排除node_modules吗?
+
+node_modules中代码量大， babel编译费时间。 一般node_modules都支持es5,应该排除掉node_modules。对于不支持es5的库，手动配置babel-loader去 编译。
+
+在babel7中，使用babel.config.js配置文件，会自动排除node_modules   issue:https://github.com/babel/babel-loader/issues/171
+
+https://github.com/obahareth/are-you-es5
+
 前端缓存
-postcss  minify
+postcss minify
 用户浏览器版本、机型分析
 
-todo:  virtualbox ie  ievms    centos vnc-server
+todo: virtualbox ie ievms centos vnc-server  测试ie下兼容性
+todo: children in react
+todo: https://github.com/jamiebuilds/the-super-tiny-compiler
 
+构建优化： babel-loader排除node_modules
 
 1. prettier,新建.prettierrc.js
    prettier 有默认配置，建立配置文件覆盖。
@@ -71,71 +92,193 @@ eslint-plugin-foo → foo/a-rule
 
 integration with vscode
 
-build tools for webpack : eslint-loader 加入webpack构建
+build tools for webpack : eslint-loader 加入 webpack 构建
 
 <!-- todo 写一个eslint 插件、配置分享 -->
-## 关于eslint配置
-1. 代码里，如eslint-disable等注释。 一般是一些eslint rule
-2. .eslintrc* ，一般是eslint rule，插件，解析配置，解析引擎， 包含文件等
-3. 命令行里， 除了eslintrc中的，还包含 cache配置等。cache可减少下一次eslint执行时间。  fix
-4. webpack eslint-loader里 option配置，包含cache，fix等
 
-4. 安装 react,react-dom
-5. 安装webpack webpack-cli
+## 关于 eslint 配置
+
+1. 代码里，如 eslint-disable 等注释。 一般是一些 eslint rule
+2. .eslintrc\* ，一般是 eslint rule，插件，解析配置，解析引擎， 包含文件等
+3. 命令行里， 除了 eslintrc 中的，还包含 cache 配置等。cache 可减少下一次 eslint 执行时间。 fix
+4. webpack eslint-loader 里 option 配置，包含 cache，fix 等
+
+5. 安装 react,react-dom
+6. 安装 webpack webpack-cli
 
 pkg.json https://docs.npmjs.com/files/package.json
 暂时用。eslintignore
 
 ## webpack
+
 mode: development production none
-webpack 默认支持转换import export。 其他es6属性要loader
-对于图片、css等，webpack会把一切当作bundle，生成依赖图谱。 gulp可能只是复制图片到文件夹下。
+webpack 默认支持转换 import export。 其他 es6 属性要 loader
+对于图片、css 等，webpack 会把一切当作 bundle，生成依赖图谱。 gulp 可能只是复制图片到文件夹下。
 css-loader style-loader
 file-loader
-需要引入file-loader后，css-loader 支持url()  
+需要引入 file-loader 后，css-loader 支持 url()
 
-import data  cvs-loader xml-loader
+import data cvs-loader xml-loader
 
-multi entry  多入口 多输出
+multi entry 多入口 多输出
 
-html-webpack-plugin  自动生成html   // todo
+html-webpack-plugin 自动生成 html // todo
 补充 ： html-webpack-template
 
- clean-webpack-plugin
+clean-webpack-plugin
 
- manifest 清单。   webpack-manifest-plugin 导出清单插件
+manifest 清单。 webpack-manifest-plugin 导出清单插件
 
-sourcemap https://blog.teamtreehouse.com/introduction-source-maps  浏览器支持sourceMap,chrome需要在setting- sources 里面打开
-两种方式提示浏览器存在sourceMap
+sourcemap https://blog.teamtreehouse.com/introduction-source-maps 浏览器支持 sourceMap,chrome 需要在 setting- sources 里面打开
+两种方式提示浏览器存在 sourceMap
 You indicate to the browser that a source map is available by adding a special comment to the bottom of your optimised file.
 //# sourceMappingURL=/path/to/script.js.map
 
 You can also specify a source map is available by sending the X-SourceMap HTTP header in the response for the compressed JavaScript file.
 X-SourceMap: /path/to/script.js.map
 
-devtool 设置sourceMap   // todo sourcemap的选型
-
+devtool 设置 sourceMap // todo sourcemap 的选型
 
 webpack's Watch Mode
-webpack-dev-server          "start": "webpack-dev-server --open",
+webpack-dev-server "start": "webpack-dev-server --open",
 webpack-dev-middleware 加 express
 
-
-todo:  Hot Module Replacement
+todo: Hot Module Replacement
 
 code-splitting 代码分割： entry， splitchunkplugin, dynamic import
 
-两个入口都引入lodash时，输出结果会都包含lodash，重复了。
-dependOn属性  测试失败
+两个入口都引入 lodash 时，输出结果会都包含 lodash，重复了。
+dependOn 属性 测试失败
 
 SplitChunksPlugin
 Since webpack v4, the CommonsChunkPlugin was removed in favor of optimization.splitChunks.
-mini-css-extract-plugin 分割css
+mini-css-extract-plugin 分割 css
 
-
-动态导入 import().  require.ensure()     webpack实现的import()内部使用了promise
+动态导入 import(). require.ensure() webpack 实现的 import()内部使用了 promise
 
 https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655
 The reason we need default is that since webpack 4, when importing a CommonJS module, the import will no longer resolve to the value of module.exports, it will instead create an artificial namespace object for the CommonJS module. For more information on the reason behind this, read webpack 4: import() and CommonJs
 
+todo: htmlwebpack-plugin root
+
+为什么 react 组件内一定要导入 React？
+因为 jsx 编译成 React.createElement, 所以 react 需要在作用域内。 scope
+
+## babel
+
+babel 本身解析代码，并输出相同的代码，通过插件才能语法转换。presets 是插件的组合。
+插件分为： transform ,syntax
+babel-plugin-xxx
+@org/babel-plugin-xx
+功能：
+
+1. 转换语法
+2. polyfill
+
+babel-loader 可转 es6 语法、jsx 文件。 设置 babel preset: env(es6) react(jsx)
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+{
+"presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+
+preset 预设
+插件执行顺序：
+Plugins run before Presets.
+Plugin ordering is first to last.
+Preset ordering is reversed (last to first).
+
+plugin 和 preset 的 option 设置
+
+babel 对语法的转换，在低版本浏览器要配合 polyfill 使用：
+如 数组展开，需要Array支持Array.from
+|Feature| Requirements|
+|Async functions, Generators | regenerator runtime
+|Array destructuring, For Of | Symbol, prototype[Symbol.iterator]
+|Spread| Array.from
+
+browserslist:
+By default @babel/preset-env will use browserslist config sources unless either the targets or ignoreBrowserslistConfig options are set.
+
+
+import return promise  所以可以与async函数一起用，需要插件
+
+@babel/plugin-syntax-dynamic-import
+ 
+
+ 
+It is possible to provide a dynamic expression to import() when you might need to import specific module based on a computed variable later.
+
+ todo https://developer.mozilla.org/en-US/docs/Glossary/CORS
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-crossorigin
+
+ 
+
+浏览器。 支持preload： 当前页需要使用，下载下来，不执行
+
+prefetch：下一个navigation可能会使用，在浏览器空闲时间下载下来。
+
+webpack也支持
+
+ 
+
+Bundle Analysis    打包分析
+ 生成解析文件webpack --profile --json > stats.json    使用官方分析工具，等分析
+
+ 
+
+lazy  loading
+
+caching
+
+ [name]。[contenthash]  .js
+
+代码没变，contenthash变了：
+
+原因：This is because webpack includes certain boilerplate, specifically the runtime and manifest, in the entry chunk.
+
+解决：Extracting Boilerplate　
+
++     runtimeChunk: 'single',
+
+Lets add optimization.splitChunks with cacheGroups with next params and build:
+复制代码
+optimization: {
+      runtimeChunk: 'single',
++     splitChunks: {
++       cacheGroups: {
++         vendor: {
++           test: /[\\/]node_modules[\\/]/,
++           name: 'vendors',
++           chunks: 'all',
++         },
++       },
++     },
+    },
+复制代码
+ 
+
+... we can see that all three have. This is because each module.id is incremented based on resolving order by default. Meaning when the order of resolving is changed, the IDs will be changed as well. So, to recap:
+
+The main bundle changed because of its new content.
+The vendor bundle changed because its module.id was changed.
+And, the runtime bundle changed because it now contains a reference to a new module.
+ 
+
+ 
+
++     moduleIds: 'hashed',
+ 
+
+发布library
+
+webpack的环境变量 webpack --env.production --env.NODE_ENV=local 
+
+webpack cli
+
+在webpack配置里面访问webpack env 需要将module。exports指向函数
+
+ chunk的概念： 最终输出的js文件，一个js一个chunk。 来源： entry、splitChunkPlugin、dynamic import
+
+ todo: dev webpack配置文件分开
 
