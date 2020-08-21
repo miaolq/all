@@ -1,6 +1,9 @@
 # polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集
 前端缓存
 postcss  minify
+用户浏览器版本、机型分析
+
+todo:  virtualbox ie  ievms    centos vnc-server
 
 
 1. prettier,新建.prettierrc.js
@@ -114,5 +117,25 @@ devtool 设置sourceMap   // todo sourcemap的选型
 
 
 webpack's Watch Mode
-webpack-dev-server
-webpack-dev-middleware
+webpack-dev-server          "start": "webpack-dev-server --open",
+webpack-dev-middleware 加 express
+
+
+todo:  Hot Module Replacement
+
+code-splitting 代码分割： entry， splitchunkplugin, dynamic import
+
+两个入口都引入lodash时，输出结果会都包含lodash，重复了。
+dependOn属性  测试失败
+
+SplitChunksPlugin
+Since webpack v4, the CommonsChunkPlugin was removed in favor of optimization.splitChunks.
+mini-css-extract-plugin 分割css
+
+
+动态导入 import().  require.ensure()     webpack实现的import()内部使用了promise
+
+https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655
+The reason we need default is that since webpack 4, when importing a CommonJS module, the import will no longer resolve to the value of module.exports, it will instead create an artificial namespace object for the CommonJS module. For more information on the reason behind this, read webpack 4: import() and CommonJs
+
+
