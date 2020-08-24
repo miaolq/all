@@ -1,20 +1,29 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const path = require('path')
+const process = require('process')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+let config = {
+  mode: 'production',
+}
+
+if (process.env.NODE_ENV === 'development') {
+  config = {
+    mode: 'development',
+    devtool: 'inline-source-map',
+    devServer: {
+      contentBase: './dist',
+    },
+  }
+}
 module.exports = {
-  mode: "development", // none 默认production
-  // devtool: "inline-source-map",
-  devServer: {
-    contentBase: "./dist",
-  },
+  ...config,
   entry: {
-    app: "./src/index.js",
-    print: "./src/print.js",
+    app: './src/index.js',
   },
   output: {
-    filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist"), // 得是绝对路径
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'), // 得是绝对路径
     // publicPath: "/",  // 资源的url的前缀默认是当前目录
   },
   optimization: {
@@ -27,23 +36,23 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     // HtmlWebpackPlugin默认使用ejs loader . 支持lodash template语法
-    new HtmlWebpackPlugin({ template: "./public/index.html" }),
+    new HtmlWebpackPlugin({ template: './public/index.html' }),
   ],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/, // node_modules 不编译
-        use: ["babel-loader"],
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        use: ["file-loader"],
+        use: ['file-loader'],
       },
     ],
   },
-};
+}

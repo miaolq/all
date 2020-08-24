@@ -282,3 +282,8 @@ webpack cli
 
  todo: dev webpack配置文件分开
 
+airnb 关闭jsx-a11y
+
+react-router-dom 依赖了react-router
+
+cross-env

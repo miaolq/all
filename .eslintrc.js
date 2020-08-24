@@ -6,11 +6,14 @@ module.exports = {
     // node: true,
   },
   extends: [
-    "plugin:react/recommended",
-    "airbnb",
-    "airbnb/hooks", // 检测hook规范
-    "prettier", // 禁用eslint规则中关于格式的部分
-    "prettier/react", // 禁用eslint react插件中关于格式的部分 如：react/jsx-wrap-multilines
+    'plugin:react/recommended',
+    'airbnb-base',
+    'airbnb/rules/react',
+    // 'airbnb/rules/react-a11y',
+    // 'airbnb', 见node_modules包含上面3个
+    'airbnb/hooks', // 检测hook规范
+    'prettier', // 禁用eslint规则中关于格式的部分
+    'prettier/react', // 禁用eslint react插件中关于格式的部分 如：react/jsx-wrap-multilines
   ],
   // processor 处理器 Plugins may provide processors
   // parser:'' // 指定parser引擎
@@ -22,13 +25,13 @@ module.exports = {
       jsx: true, // 支持jsx语法，不是指react。
     },
     ecmaVersion: 2020, // 支持es2020的语法
-    sourceType: "module", // 默认是‘script’
+    sourceType: 'module', // 默认是‘script’
   },
-  plugins: ["react"], // eslint-plugin-react
+  plugins: ['react'], // eslint-plugin-react
   rules: {
-    "react/jsx-filename-extension": "off",
+    'react/jsx-filename-extension': 'off',
   },
   // ignorePattern ignorePath excludedFiles Unexpected top-level property "excludedFiles".
   // ignorePattern: ["/dist/*.js"],
   // excludedFiles: ["/dist/*.js"],
-};
+}
