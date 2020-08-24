@@ -287,3 +287,6 @@ airnb 关闭jsx-a11y
 react-router-dom 依赖了react-router
 
 cross-env
+
+hmr 原理 todo
+开启hot： true 后 ，contenthash报错： Cannot use [chunkhash] or [contenthash] for chunk in '[name].[contenthash].js' (use [hash] instead)

@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
     devtool: 'inline-source-map',
     devServer: {
       contentBase: './dist',
+      historyApiFallback: true, // 返回根目录，防止404
     },
   }
 }
