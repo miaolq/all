@@ -1,4 +1,4 @@
-export const generateFetch = ({ root = '', stringify, toJson }) => {
+export const generateFetch = ({ root = '', stringify, toJson, handleUnexpectedCode }) => {
   return (url, options) => {
     const copy = { ...options }
     const { body } = copy
@@ -6,7 +6,15 @@ export const generateFetch = ({ root = '', stringify, toJson }) => {
       copy.body = JSON.stringify(body)
     }
     const response = fetch(`${root}${url}`, copy)
-    return toJson ? response.then((res) => res.json()) : response
+    if (!toJson && !handleUnexpectedCode) {
+      return response
+    }
+
+    const resJson = response.then((res) => res.json())
+    if (handleUnexpectedCode) {
+      return resJson.then(handleUnexpectedCode)
+    }
+    return resJson
   }
 }
 

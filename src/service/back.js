@@ -1,18 +1,22 @@
 import qs from 'query-string'
+import { message } from 'antd'
 import fetch, { generateFetch } from './fetch'
+import { filterKey } from '../util'
 
 const mfetch = generateFetch({
-  root: '//localhost:3001',
-  // root: '//106.14.121.159/back',
+  // root: '//localhost:3001',
+  root: '//106.14.121.159/back',
   stringify: true,
   toJson: true,
+  handleUnexpectedCode: (res) => {
+    res.code !== 0 && message.error(res.message)
+    return res
+  },
 })
 
 const getSenlist = ({ content, pageIndex, pageSize }) => {
-  const body = { pageIndex, pageSize }
-  if (content) {
-    body.content = content
-  }
+  let body = { content, pageIndex, pageSize }
+  body = filterKey(body)
   return mfetch(`/sentence?${qs.stringify(body)}`) // todo
 }
 

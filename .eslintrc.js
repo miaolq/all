@@ -30,6 +30,9 @@ module.exports = {
   plugins: ['react'], // eslint-plugin-react
   rules: {
     'react/jsx-filename-extension': 'off',
+    'no-unused-expressions': 'off',
+    camelcase: 'off',
+    'no-underscore-dangle': 'off',
   },
   // ignorePattern ignorePath excludedFiles Unexpected top-level property "excludedFiles".
   // ignorePattern: ["/dist/*.js"],

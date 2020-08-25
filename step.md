@@ -292,3 +292,6 @@ hmr 原理 todo
 开启hot： true 后 ，contenthash报错： Cannot use [chunkhash] or [contenthash] for chunk in '[name].[contenthash].js' (use [hash] instead)
 
 run build 集成 分析工具 todo
+
+
+npm i sass sass-loader --save-dev
