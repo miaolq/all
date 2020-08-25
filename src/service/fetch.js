@@ -1,4 +1,4 @@
-export default ({ root = '', stringify, toJson }) => {
+export const generateFetch = ({ root = '', stringify, toJson }) => {
   return (url, options) => {
     const copy = { ...options }
     const { body } = copy
@@ -9,6 +9,8 @@ export default ({ root = '', stringify, toJson }) => {
     return toJson ? response.then((res) => res.json()) : response
   }
 }
+
+export default fetch
 
 // eslint-disable-next-line no-unused-vars
 function doc(data) {

@@ -1,4 +1,4 @@
-# polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集
+# polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集， github actions集成
 
 
 测试： f2etest  wetest testin
@@ -290,3 +290,5 @@ cross-env
 
 hmr 原理 todo
 开启hot： true 后 ，contenthash报错： Cannot use [chunkhash] or [contenthash] for chunk in '[name].[contenthash].js' (use [hash] instead)
+
+run build 集成 分析工具 todo

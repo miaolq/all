@@ -6,6 +6,7 @@ export default function Home() {
     <div className="home">
       home
       <Link to="/sentence">sentence</Link>
+      <Link to="/form">form</Link>
     </div>
   )
 }
