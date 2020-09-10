@@ -34,6 +34,14 @@ module.exports = {
     // },
     runtimeChunk: true,
   },
+  // optimization: {
+  //   minimize: false, // 默认根据mode判断
+  //   // 代码分割
+  //   // splitChunks: {
+  //   //   chunks: "all",
+  //   // },
+  //   // runtimeChunk: true,
+  // },
   plugins: [
     new CleanWebpackPlugin(),
     // HtmlWebpackPlugin默认使用ejs loader . 支持lodash template语法
