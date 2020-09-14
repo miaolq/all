@@ -1,6 +1,6 @@
 # polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集， github actions 集成
 
-todo: postcss\browselist\img in css\ img baseUrl ,img size\
+todo: postcss\browserlist\img in css\ img baseUrl ,img size\
 
 测试： f2etest wetest testin
 
@@ -323,3 +323,7 @@ hmr:
    }
    state 不会保持，已挂载事件可能不会更新等等
 3. 上述操作，不能保持 state，且不能更新已挂载的实践。需要 react-hot-loader，鉴于学习成本、react-hot-loader 即将过时、react-hot-loader 不支持 hook，要支持 hook 需@hot-loader/react-dom，且各种配置较多。不使用 react-hot-loader。
+
+npx browserslist
+
+@babel/preset-env 根据 browserslist 自动语法转换、和 core-js polyfill
