@@ -1,8 +1,8 @@
 # polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集， github actions 集成
 
-测试： f2etest wetest testin
+todo: postcss\browselist\img in css\ img baseUrl ,img size\
 
-todo : 提取 react
+测试： f2etest wetest testin
 
 todo: CommonsChunkPlugin 的问题， 新 splitChunkPlugin 配置 runTimeChunk? https://developers.google.com/web/fundamentals/performance/webpack/use-long-term-caching
 
