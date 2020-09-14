@@ -1,19 +1,18 @@
-# polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集， github actions集成
+# polyfill, 单元测试、CI、DI， 前端、后端错误监控， 埋点数据收集， github actions 集成
 
+测试： f2etest wetest testin
 
-测试： f2etest  wetest testin
+todo : 提取 react
 
-todo : 提取react
-
-todo: CommonsChunkPlugin的问题， 新splitChunkPlugin配置 runTimeChunk? https://developers.google.com/web/fundamentals/performance/webpack/use-long-term-caching
+todo: CommonsChunkPlugin 的问题， 新 splitChunkPlugin 配置 runTimeChunk? https://developers.google.com/web/fundamentals/performance/webpack/use-long-term-caching
 
 tc39
-question: 
-需要在babel-loader中排除node_modules吗?
+question:
+需要在 babel-loader 中排除 node_modules 吗?
 
-node_modules中代码量大， babel编译费时间。 一般node_modules都支持es5,应该排除掉node_modules。对于不支持es5的库，手动配置babel-loader去 编译。
+node_modules 中代码量大， babel 编译费时间。 一般 node_modules 都支持 es5,应该排除掉 node_modules。对于不支持 es5 的库，手动配置 babel-loader 去 编译。
 
-在babel7中，使用babel.config.js配置文件，会自动排除node_modules   issue:https://github.com/babel/babel-loader/issues/171
+在 babel7 中，使用 babel.config.js 配置文件，会自动排除 node_modules issue:https://github.com/babel/babel-loader/issues/171
 
 https://github.com/obahareth/are-you-es5
 
@@ -21,11 +20,11 @@ https://github.com/obahareth/are-you-es5
 postcss minify
 用户浏览器版本、机型分析
 
-todo: virtualbox ie ievms centos vnc-server  测试ie下兼容性
+todo: virtualbox ie ievms centos vnc-server 测试 ie 下兼容性
 todo: children in react
 todo: https://github.com/jamiebuilds/the-super-tiny-compiler
 
-构建优化： babel-loader排除node_modules
+构建优化： babel-loader 排除 node_modules
 
 1. prettier,新建.prettierrc.js
    prettier 有默认配置，建立配置文件覆盖。
@@ -190,7 +189,7 @@ Preset ordering is reversed (last to first).
 plugin 和 preset 的 option 设置
 
 babel 对语法的转换，在低版本浏览器要配合 polyfill 使用：
-如 数组展开，需要Array支持Array.from
+如 数组展开，需要 Array 支持 Array.from
 |Feature| Requirements|
 |Async functions, Generators | regenerator runtime
 |Array destructuring, For Of | Symbol, prototype[Symbol.iterator]
@@ -199,99 +198,128 @@ babel 对语法的转换，在低版本浏览器要配合 polyfill 使用：
 browserslist:
 By default @babel/preset-env will use browserslist config sources unless either the targets or ignoreBrowserslistConfig options are set.
 
-
-import return promise  所以可以与async函数一起用，需要插件
+import return promise 所以可以与 async 函数一起用，需要插件
 
 @babel/plugin-syntax-dynamic-import
- 
 
- 
 It is possible to provide a dynamic expression to import() when you might need to import specific module based on a computed variable later.
 
- todo https://developer.mozilla.org/en-US/docs/Glossary/CORS
+todo https://developer.mozilla.org/en-US/docs/Glossary/CORS
 
 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-crossorigin
 
- 
+浏览器。 支持 preload： 当前页需要使用，下载下来，不执行
 
-浏览器。 支持preload： 当前页需要使用，下载下来，不执行
+prefetch：下一个 navigation 可能会使用，在浏览器空闲时间下载下来。
 
-prefetch：下一个navigation可能会使用，在浏览器空闲时间下载下来。
+webpack 也支持
 
-webpack也支持
+Bundle Analysis 打包分析
+生成解析文件 webpack --profile --json > stats.json 使用官方分析工具，等分析
 
- 
-
-Bundle Analysis    打包分析
- 生成解析文件webpack --profile --json > stats.json    使用官方分析工具，等分析
-
- 
-
-lazy  loading
+lazy loading
 
 caching
 
- [name]。[contenthash]  .js
+[name]。[contenthash] .js
 
-代码没变，contenthash变了：
+代码没变，contenthash 变了：
 
 原因：This is because webpack includes certain boilerplate, specifically the runtime and manifest, in the entry chunk.
 
-解决：Extracting Boilerplate　
+解决：Extracting Boilerplate
 
-+     runtimeChunk: 'single',
+-     runtimeChunk: 'single',
 
 Lets add optimization.splitChunks with cacheGroups with next params and build:
 复制代码
 optimization: {
-      runtimeChunk: 'single',
-+     splitChunks: {
-+       cacheGroups: {
-+         vendor: {
-+           test: /[\\/]node_modules[\\/]/,
-+           name: 'vendors',
-+           chunks: 'all',
-+         },
-+       },
-+     },
-    },
-复制代码
- 
+runtimeChunk: 'single',
+
+-     splitChunks: {
+-       cacheGroups: {
+-         vendor: {
+-           test: /[\\/]node_modules[\\/]/,
+-           name: 'vendors',
+-           chunks: 'all',
+-         },
+-       },
+-     },
+      },
+  复制代码
 
 ... we can see that all three have. This is because each module.id is incremented based on resolving order by default. Meaning when the order of resolving is changed, the IDs will be changed as well. So, to recap:
 
 The main bundle changed because of its new content.
 The vendor bundle changed because its module.id was changed.
 And, the runtime bundle changed because it now contains a reference to a new module.
- 
 
- 
+-     moduleIds: 'hashed',
 
-+     moduleIds: 'hashed',
- 
+发布 library
 
-发布library
-
-webpack的环境变量 webpack --env.production --env.NODE_ENV=local 
+webpack 的环境变量 webpack --env.production --env.NODE_ENV=local
 
 webpack cli
 
-在webpack配置里面访问webpack env 需要将module。exports指向函数
+在 webpack 配置里面访问 webpack env 需要将 module。exports 指向函数
 
- chunk的概念： 最终输出的js文件，一个js一个chunk。 来源： entry、splitChunkPlugin、dynamic import
+chunk 的概念： 最终输出的 js 文件，一个 js 一个 chunk。 来源： entry、splitChunkPlugin、dynamic import
 
- todo: dev webpack配置文件分开
+todo: dev webpack 配置文件分开
 
-airnb 关闭jsx-a11y
+airnb 关闭 jsx-a11y
 
-react-router-dom 依赖了react-router
+react-router-dom 依赖了 react-router
 
 cross-env
 
 hmr 原理 todo
-开启hot： true 后 ，contenthash报错： Cannot use [chunkhash] or [contenthash] for chunk in '[name].[contenthash].js' (use [hash] instead)
+开启 hot： true 后 ，contenthash 报错： Cannot use [chunkhash] or [contenthash] for chunk in '[name].[contenthash].js' (use [hash] instead)
 
 run build 集成 分析工具 todo
 
-
 npm i sass sass-loader --save-dev
+
+MiniCssExtractPlugin
+
+https://medium.com/jspoint/react-router-and-webpack-v4-code-splitting-using-splitchunksplugin-f0a48f110312
+
+npm install babel-plugin-import --save-dev
+
+在代码中改变 import 文件的顺序，也会使得打包内容更改， 对 node_modules 中提取的三方文件 vendors 影响较大，缓存失效。 使用 externals 吧
+
+... we can see that all three have. This is because each module.id is incremented based on resolving order by default. Meaning when the order of resolving is changed, the IDs will be changed as well. So, to recap:
+
+The main bundle changed because of its new content.
+The vendor bundle changed because its module.id was changed.
+And, the runtime bundle changed because it now contains a reference to a new module.
+
+-     moduleIds: 'hashed',
+
+几种 chunk 概念： vendor async commun
+
+react-loadable vs import()
+
+externals
+
+antd css 按需加载
+"plugins": [
+[
+"import",
+{
+"libraryName": "antd",
+"style": "css" // true or 'css'
+}
+]
+]
+
+babel plugin 顺序？ todo
+hmr:
+
+1. hot:true
+2. if (module.hot) {
+   module.hot.accept()
+   }
+   state 不会保持，已挂载事件可能不会更新等等
+3. 上述操作，不能保持 state，且不能更新已挂载的实践。需要 react-hot-loader，鉴于学习成本、react-hot-loader 即将过时、react-hot-loader 不支持 hook，要支持 hook 需@hot-loader/react-dom，且各种配置较多。不使用 react-hot-loader。
