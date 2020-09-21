@@ -8,11 +8,11 @@ module.exports = {
   devServer: {
     hot: true,
     hotOnly: true,
-    contentBase: './dist',
+    contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true, // 返回根目录，防止404
   },
   entry: {
-    app: './src/index.js',
+    app: ['core-js', './src/index.js'],
   },
   output: {
     filename: '[name].[hash].js',
@@ -47,11 +47,18 @@ module.exports = {
       },
       {
         test: /\.(css|scss|sass)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        use: ['file-loader'],
+        test: /\.(jpeg|png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 2048,
+            },
+          },
+        ],
       },
     ],
   },

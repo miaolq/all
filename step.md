@@ -314,7 +314,6 @@ antd css 按需加载
 ]
 ]
 
-babel plugin 顺序？ todo
 hmr:
 
 1. hot:true
@@ -325,5 +324,17 @@ hmr:
 3. 上述操作，不能保持 state，且不能更新已挂载的实践。需要 react-hot-loader，鉴于学习成本、react-hot-loader 即将过时、react-hot-loader 不支持 hook，要支持 hook 需@hot-loader/react-dom，且各种配置较多。不使用 react-hot-loader。
 
 npx browserslist
+npx browserslist 'defaults'
 
-@babel/preset-env 根据 browserslist 自动语法转换、和 core-js polyfill
+bable 7.4 之后： 最佳实践
+@babel/preset-env 默认配置：根据 browserslist 自动转换语法相关， 没有 polyfill, 可配置 usebuildIn。 polyfill 请手动 import core-js@3
+@babel/preset-env 输出结果大小：取决于浏览器最低版本，如果要兼容 ie11 或者 ios8 安卓 4 其实，大小相比原来减少不多
+
+## 顺序
+
+babel plugin preset
+This means if two transforms both visit the "Program" node, the transforms will run in either plugin or preset order.
+
+Plugins run before Presets.
+Plugin ordering is first to last.
+Preset ordering is reversed (last to first).

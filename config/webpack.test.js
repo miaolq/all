@@ -10,7 +10,7 @@ module.exports = {
   mode: 'production',
   devtool: 'source-map',
   entry: {
-    app: './src/index.js',
+    app: ['core-js', './src/index.js'],
   },
   output: {
     filename: '[name].[contenthash:8].js',
@@ -39,6 +39,7 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
+      openAnalyzer: false,
     }),
     new ManifestPlugin(),
   ],
@@ -51,11 +52,18 @@ module.exports = {
       },
       {
         test: /\.(css|scss|sass)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        use: ['file-loader'],
+        test: /\.(jpeg|png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 2048,
+            },
+          },
+        ],
       },
     ],
   },
