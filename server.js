@@ -1,21 +1,26 @@
-/* eslint-disable import/no-extraneous-dependencies */
-const express = require("express");
-const webpack = require("webpack");
-const webpackDevMiddleware = require("webpack-dev-middleware");
-const config = require("./webpack.config.js");
+const Koa = require('koa')
+const koaStatic = require('koa-static')
+const compress = require('koa-compress')
+const path = require('path')
 
-const app = express();
-const compiler = webpack(config);
+const app = new Koa()
 
-// Tell express to use the webpack-dev-middleware and use the webpack.config.js
-// configuration file as a base.
 app.use(
-  webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath,
+  compress({
+    filter(content_type) {
+      return /(text|javascript)/i.test(content_type)
+    },
+    threshold: 2048,
+    gzip: {
+      flush: require('zlib').constants.Z_SYNC_FLUSH,
+    },
+    deflate: {
+      flush: require('zlib').constants.Z_SYNC_FLUSH,
+    },
+    br: false, // disable brotli
   })
-);
+)
 
-// Serve the files on port 3000.
-app.listen(3000, () => {
-  console.log("Example app listening on port 3000!\n");
-});
+app.use(koaStatic(path.resolve(__dirname, 'dist')))
+
+app.listen(3000)
