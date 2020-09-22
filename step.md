@@ -338,3 +338,5 @@ This means if two transforms both visit the "Program" node, the transforms will 
 Plugins run before Presets.
 Plugin ordering is first to last.
 Preset ordering is reversed (last to first).
+
+ scp -r ./dist/* root@106.14.121.159:/home/root/code/all

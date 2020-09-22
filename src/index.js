@@ -7,7 +7,7 @@ import Form from './page/form'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="all">
       <Switch>
         <Route exact path="/">
           <Home />

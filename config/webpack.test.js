@@ -15,6 +15,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash:8].js',
     path: path.resolve(__dirname, '../dist'), // 得是绝对路径
+    publicPath:'all/'
   },
   externals: {
     react: 'React',
