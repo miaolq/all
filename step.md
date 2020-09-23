@@ -339,4 +339,52 @@ Plugins run before Presets.
 Plugin ordering is first to last.
 Preset ordering is reversed (last to first).
 
- scp -r ./dist/* root@106.14.121.159:/home/root/code/all
+scp -r ./dist/\* root@106.14.121.159:/home/root/code/all
+
+location / {
+gzip_static on;
+try_files \$uri @index;
+}
+
+location @index {
+add_header Cache-Control no-cache;
+expires 0;
+try_files /index.html =404;
+}
+
+root /home/myapp;
+
+    # Add index.php to the list if you are using PHP
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location /public/ {
+            alias /home/myapp/public/;
+    }
+
+    location / {
+            proxy_pass http://IPADRESSOFNODEJSSERVER:8080;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+            # First attempt to serve request as file, then
+            # as directory, then fall back to displaying a 404.
+            #try_files $uri $uri/ =404;
+    }
+
+    location /all/ {
+        autoindex on;
+        access_log /home/root/code/log/all.log main;
+        error_log /home/root/code/log/all.error.log debug;
+        alias /home/root/code/all/;
+
+}
+location ~ /all {
+alias /home/root/code/all/index.html;
+add_header Cache-Control no-cache;
+expires 0;
+default_type "text/html";
+}
