@@ -1,3 +1,4 @@
+// TODO: middleware形式
 export const generateFetch = ({ root = '', stringify, toJson, handleUnexpectedCode }) => {
   return (url, options) => {
     const copy = { ...options }
