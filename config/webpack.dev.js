@@ -10,6 +10,7 @@ module.exports = {
     hotOnly: true,
     contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true, // 返回根目录，防止404
+    contentBasePublicPath: 'all',
   },
   entry: {
     app: ['core-js', './src/index.js'],
@@ -17,6 +18,7 @@ module.exports = {
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, '../dist'), // 得是绝对路径
+    // publicPath: 'all/',
   },
   externals: {
     react: 'React',
@@ -47,7 +49,17 @@ module.exports = {
       },
       {
         test: /\.(css|scss|sass)$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              additionalData: `@import "${path.resolve(__dirname, '../src/style/_var.scss')}";`,
+            },
+          },
+        ],
       },
       {
         test: /\.(jpeg|png|jpg|gif|svg)$/,
