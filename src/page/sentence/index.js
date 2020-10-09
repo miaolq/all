@@ -61,6 +61,9 @@ export default function Sentence() {
 
   return (
     <div className="page-sentence">
+      <img src="https://oss-miao.oss-cn-shanghai.aliyuncs.com/img/black-cat.jpg" alt="" />
+      <img src="https://oss-miao.oss-cn-shanghai.aliyuncs.com/key" alt=""/>
+
       <Input.Search
         style={{ width: 300 }}
         onSearch={onSearch}
