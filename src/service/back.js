@@ -4,8 +4,8 @@ import fetch, { generateFetch } from './fetch'
 import { filterKey } from '../util'
 
 const mfetch = generateFetch({
-  // root: '//localhost:3001',
   root: '//106.14.121.159/back',
+  // root: '//106.14.121.159/back',
   stringify: true,
   toJson: true,
   handleUnexpectedCode: (res) => {
@@ -30,6 +30,26 @@ const getMaterial = (parentIds) => {
   }
   return fetch(url)
 }
+
+const login = () => {
+  console.log(9999)
+  fetch(`//106.14.121.159/back/user/login`, {
+    method: 'post',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      account: 'root2',
+      passwd: 'root',
+    }),
+  })
+}
+
+login()
+
+setTimeout(() => {
+  fetch('//106.14.121.159/back/user', {
+    credentials: 'include',
+  })
+}, 1000)
 
 export default {
   getSenlist,
