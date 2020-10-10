@@ -11,6 +11,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true, // 返回根目录，防止404
     contentBasePublicPath: 'all',
+    // public: '192.168.23.41',
   },
   entry: {
     app: ['core-js', './src/index.js'],

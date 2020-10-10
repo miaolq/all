@@ -4,7 +4,7 @@ import fetch, { generateFetch } from './fetch'
 import { filterKey } from '../util'
 
 const mfetch = generateFetch({
-  root: '//106.14.121.159/back',
+  root: '//localhost:3001',
   // root: '//106.14.121.159/back',
   stringify: true,
   toJson: true,
@@ -31,6 +31,8 @@ const getMaterial = (parentIds) => {
   return fetch(url)
 }
 
+var a
+
 const login = () => {
   console.log(9999)
   fetch(`//106.14.121.159/back/user/login`, {
@@ -41,13 +43,23 @@ const login = () => {
       passwd: 'root',
     }),
   })
+    .then((res) => {
+      return res.json()
+    })
+    .then((res) => {
+      console.log(88, res)
+      res.code === 0 && (a = res.data.tk)
+    })
 }
 
 login()
 
 setTimeout(() => {
+  console.log(99, a)
   fetch('//106.14.121.159/back/user', {
-    credentials: 'include',
+    headers: {
+      Authorization: `Bearer ${a}`,
+    },
   })
 }, 1000)
 

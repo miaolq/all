@@ -6,7 +6,7 @@ const client = new Oss({
   region: 'oss-cn-shanghai',
   accessKeyId: 'LTAI4G4RfAS7DP7EQrV61e3H',
   accessKeySecret: 'hI8BtzWZGTKQs5QeF6ErAe8ihl03HT',
-  bucket: 'oss-miao',
+  bucket: 'good-oss',
 })
 
 console.log(__dirname)
@@ -21,4 +21,8 @@ async function putObject() {
   }
 }
 
-putObject()
+// putObject()
+
+client.list().then((o) => {
+  console.dir(o)
+})
