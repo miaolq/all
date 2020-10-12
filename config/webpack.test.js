@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'production',
@@ -15,7 +16,6 @@ module.exports = {
   output: {
     filename: '[name].[contenthash:8].js',
     path: path.resolve(__dirname, '../dist'), // 得是绝对路径
-    publicPath:'all/'
   },
   externals: {
     react: 'React',
@@ -43,6 +43,9 @@ module.exports = {
       openAnalyzer: false,
     }),
     new ManifestPlugin(),
+    new webpack.DefinePlugin({
+      GOOD: JSON.stringify('//good-oss.oss-cn-shanghai.aliyuncs.com'),
+    }),
   ],
   module: {
     rules: [
@@ -53,7 +56,17 @@ module.exports = {
       },
       {
         test: /\.(css|scss|sass)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              additionalData: `@import "${path.resolve(__dirname, '../src/style/_var.scss')}";`,
+            },
+          },
+        ],
       },
       {
         test: /\.(jpeg|png|jpg|gif|svg)$/,
