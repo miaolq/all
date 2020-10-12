@@ -37,4 +37,5 @@ module.exports = {
   // ignorePattern ignorePath excludedFiles Unexpected top-level property "excludedFiles".
   // ignorePattern: ["/dist/*.js"],
   // excludedFiles: ["/dist/*.js"],
+  globals:{}
 }
