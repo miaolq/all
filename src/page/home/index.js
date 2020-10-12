@@ -1,5 +1,55 @@
 import React from 'react'
+import { Layout, Menu, Popover } from 'antd'
+import { Switch, Route, Link } from 'react-router-dom'
+import Sentence from '../sentence'
+import Form from '../form'
+import Login from '../login'
+import './style.scss'
+
+const { Header, Sider, Content } = Layout
+const { Item } = Menu
+
+const menu = [
+  { to: '/sentence', label: 'sentence' },
+  { to: '/form', label: 'form' },
+  { to: '/word', label: 'word' },
+]
 
 export default function Home() {
-  return <div className="page-home">home</div>
+  return (
+    <Layout className="root-layout">
+      <Sider>
+        <div className="menu-title">ALL</div>
+        <Menu theme="dark">
+          {menu.map((item) => (
+            <Item key={item.to}>
+              <Link to={item.to}>{item.label}</Link>
+            </Item>
+          ))}
+        </Menu>
+      </Sider>
+      <Layout style={{ height: '100vh' }}>
+        <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span />
+          <Popover content={<div>退出登录</div>}>
+            <img
+              style={{ borderRadius: '50%', width: 30, height: 30 }}
+              src={`${GOOD}/avatar/avatar2.jpg`}
+            />
+          </Popover>
+        </Header>
+        <Content>
+            <Route path="/sentence">
+              <Sentence />
+            </Route>
+            <Route path="/form">
+              <Form />
+            </Route>
+            <Route path="/form/login">
+              <Login />
+            </Route>
+        </Content>
+      </Layout>
+    </Layout>
+  )
 }

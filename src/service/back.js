@@ -17,7 +17,12 @@ const mfetch = generateFetch({
 const getSenlist = ({ content, pageIndex, pageSize }) => {
   let body = { content, pageIndex, pageSize }
   body = filterKey(body)
-  return mfetch(`/sentence?${qs.stringify(body)}`) // todo
+  return mfetch(`/sentence?${qs.stringify(body)}`, {
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9vdCIsImlkIjoiNWY0OGRiYTk5NTlmNjk2YjU1NDdjZGU1IiwiaWF0IjoxNjAyMzE3MTc4LCJleHAiOjE2MDI5MjE5Nzh9.hzkGrCVAKXgjjCg0sX5M9CpGGnlpt_NAqdE7gzV9FO0',
+    },
+  }) // todo
 }
 
 const getWordList = () => {}
@@ -31,39 +36,32 @@ const getMaterial = (parentIds) => {
   return fetch(url)
 }
 
-var a
-
-const login = () => {
-  console.log(9999)
-  fetch(`//106.14.121.159/back/user/login`, {
+const login = ({ account, passwd }) => {
+  return fetch(`//106.14.121.159/back/user/login`, {
     method: 'post',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
-      account: 'root2',
-      passwd: 'root',
+      account,
+      passwd,
     }),
+  }).then((res) => {
+    return res.json()
   })
-    .then((res) => {
-      return res.json()
-    })
-    .then((res) => {
-      console.log(88, res)
-      res.code === 0 && (a = res.data.tk)
-    })
 }
 
-login()
+// login()
 
-setTimeout(() => {
-  console.log(99, a)
-  fetch('//106.14.121.159/back/user', {
-    headers: {
-      Authorization: `Bearer ${a}`,
-    },
-  })
-}, 1000)
+// setTimeout(() => {
+//   console.log(99, a)
+//   fetch('//106.14.121.159/back/user', {
+//     headers: {
+//       Authorization: `Bearer ${a}`,
+//     },
+//   })
+// }, 1000)
 
 export default {
+  login,
   getSenlist,
   getWordList,
   getMaterial,

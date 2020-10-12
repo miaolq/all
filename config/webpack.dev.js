@@ -23,6 +23,7 @@ module.exports = {
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, '../dist'), // 得是绝对路径
+    publicPath: '/all/', // 尽量与devServer的publicPath对应，否则三层路径有问题
   },
   externals: {
     react: 'React',

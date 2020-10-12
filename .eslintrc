@@ -32,7 +32,8 @@
     "react/jsx-filename-extension": "off",
     "no-unused-expressions": "off",
     "camelcase": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off"
   },
   // ignorePattern ignorePath excludedFiles Unexpected top-level property "excludedFiles".
   // ignorePattern: ["/dist/*.js"],

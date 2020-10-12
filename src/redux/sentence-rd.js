@@ -11,6 +11,7 @@ const sentenceSlice = createSlice({
       const res = await service.getSenlist(condition)
       if (res.code === 0) {
         dispatch(res.data.list)
+        console.log(9991, res)
       }
     },
   },
