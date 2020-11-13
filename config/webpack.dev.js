@@ -7,6 +7,7 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
+    port: 3333,
     hot: true,
     hotOnly: true,
     historyApiFallback: {
@@ -20,15 +21,21 @@ module.exports = {
   entry: {
     app: ['core-js', './src/index.js'],
   },
+  resolve: {
+    // modules: [path.resolve(__dirname, '../src'), 'node_modules'],
+    // alias: {
+    //   src: path.resolve(__dirname, '../src'),
+    // },
+  },
   output: {
     filename: '[name].[hash].js',
     path: path.resolve(__dirname, '../dist'), // 得是绝对路径
     publicPath: '/all/', // 尽量与devServer的publicPath对应，否则三层路径有问题
   },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  },
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM',
+  // },
   optimization: {
     runtimeChunk: 'single',
     splitChunks: {

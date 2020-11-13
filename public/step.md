@@ -388,3 +388,6 @@ add_header Cache-Control no-cache;
 expires 0;
 default_type "text/html";
 }
+
+
+Error boundaries

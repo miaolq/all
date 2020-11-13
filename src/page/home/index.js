@@ -4,6 +4,8 @@ import { Switch, Route, Link } from 'react-router-dom'
 import Sentence from '../sentence'
 import Form from '../form'
 import Login from '../login'
+import Prop from '../test/Prop'
+import Portal from '../test/Portal'
 import './style.scss'
 
 const { Header, Sider, Content } = Layout
@@ -13,6 +15,8 @@ const menu = [
   { to: '/sentence', label: 'sentence' },
   { to: '/form', label: 'form' },
   { to: '/word', label: 'word' },
+  { to: '/test', label: 'test' },
+  { to: '/portal', labrl: 'portal' },
 ]
 
 export default function Home() {
@@ -39,15 +43,20 @@ export default function Home() {
           </Popover>
         </Header>
         <Content>
-            <Route path="/sentence">
-              <Sentence />
-            </Route>
-            <Route path="/form">
-              <Form />
-            </Route>
-            <Route path="/form/login">
-              <Login />
-            </Route>
+          <Route path="/sentence">
+            <Sentence />
+          </Route>
+          <Route path="/form">
+            <Form />
+          </Route>
+          <Route path="/test">
+            <Prop />
+            <Portal />
+          </Route>
+
+          <Route path="/form/login">
+            <Login />
+          </Route>
         </Content>
       </Layout>
     </Layout>

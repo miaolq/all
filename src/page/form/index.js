@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Input, Select, Checkbox, Button } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
+import Oss from '../../component/oss'
 import data from '../../service/back'
 
 // 手动注册的输入组件不会自动填充（例如：register({ name: 'test' })），因为React Hook Form没有自定义register表单项的ref。
@@ -29,6 +30,7 @@ export default function Form() {
         <option value="a">1</option>
         <option value="b">2</option>
       </select> */}
+      <Oss />
       <Controller as={Input} name="name" control={control} prefix={<UserOutlined />} size="small" />
       <Controller as={Select} name="province" control={control}>
         <Select.Option value="a">1</Select.Option>
