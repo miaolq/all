@@ -6,6 +6,7 @@ import Form from '../form'
 import Login from '../login'
 import Prop from '../test/Prop'
 import Portal from '../test/Portal'
+import Context from './context'
 import './style.scss'
 
 const { Header, Sider, Content } = Layout
@@ -17,6 +18,7 @@ const menu = [
   { to: '/word', label: 'word' },
   { to: '/test', label: 'test' },
   { to: '/portal', labrl: 'portal' },
+  { to: '/context', label: 'context' },
 ]
 
 export default function Home() {
@@ -52,6 +54,9 @@ export default function Home() {
           <Route path="/test">
             <Prop />
             <Portal />
+          </Route>
+          <Route path="/context">
+            <Context />
           </Route>
 
           <Route path="/form/login">

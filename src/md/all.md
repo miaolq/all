@@ -28,3 +28,31 @@
 
 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ
 计算机网络 xiexiren
+
+js,css load
+js,css 执行，解析
+阻塞，解析 dom
+
+清除浮动
+margin 折叠
+float
+bfc
+animate
+transition
+flex
+居中
+
+## cache-control
+
+1. max-page
+2. no-cache 浏览器可以缓存，需要发请求
+3. no-store 浏览器不可以缓存
+4. public  cdn和浏览器都可以缓存
+5. pirvate 只可以被客户端缓存
+
+## ETag Expires
+
+
+how context work. rerender?
+
+https://www.imperva.com/learn/performance/cdn-caching/

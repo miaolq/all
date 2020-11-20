@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        /* background-image: linear-gradient(rgba(0, 0, 0, 0.3) 1px, transparent 0); */
+        /* background-size: 115px 150px; */
+        /* background-image: linear-gradient(#000,red 20%,#fff); */
+        /* 颜色后面的值是起点，方向to left right top bottom  0.25turn===90deg*/
+        /* background-image: linear-gradient(#000 ,red 50%,#fff );  0表示紧接上一个color-stop  */
+        /* 没有background-size, linear-gradient会铺满屏幕, 所以不会repeat来展示网格  */
+        background-image: linear-gradient(#999 1px, transparent 0),
+          linear-gradient(90deg, #999 1px, transparent 0);
+        background-size: 50% 50%;
+      }
+      .modal {
+        width: 300px;
+        /* height: 300px; */
+        margin: 0 auto;
+        border: 1px solid red;
+        position: relative;
+        /* 在父元素有非百分比高度时，top才有效 */
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .flex {
+        display: flex;
+        border: 1px solid red;
+      }
+      .first {
+        width: 2000px;
+        /* flex: auto; */
+      }
+      .second {
+        flex: auto;
+        /* flex: 1 与 flex: auto 区别， 1会设置宽度为0*/
+        background: #666;
+      }
+      .float-wrap {
+      }
+      .float {
+        float: left;
+        width: 100px;
+        height: 100px;
+      }
+      .text {
+        clear: left;
+        border: 1px solid red;
+      }
+    </style>
+
+    <div class="modal">
+      <span>多段多段多段多段多段多段多段多段多段多段多段多段多段多段</span>
+    </div>
+    <div class="flex">
+      <div class="first">1</div>
+      <div class="second">2</div>
+    </div>
+    <div class="float-wrap">
+      <div>
+        <div class="float">float</div>
+        <div class="text">
+          文字围绕浮动元素排版，但我们可能希望文字（.textDiv）排列在浮动元素下方，或者，我们并不希望.textDiv两边有浮动元素存在。
+          浮动元素排版超出了其父级元素（.topDiv），父元素的高度出现了塌缩，若没有文字高度的支撑，不考虑边框，父级元素高度会塌缩成零。
+          作者：ThinkMore28092 链接：https://juejin.im/post/6844903504545316877 来源：掘金
+          著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+        </div>
+      </div>
+      <div class="text">
+        文字围绕浮动元素排版，但我们可能希望文字（.textDiv）排列在浮动元素下方，或者，我们并不希望.textDiv两边有浮动元素存在。
+        浮动元素排版超出了其父级元素（.topDiv），父元素的高度出现了塌缩，若没有文字高度的支撑，不考虑边框，父级元素高度会塌缩成零。
+        作者：ThinkMore28092 链接：https://juejin.im/post/6844903504545316877 来源：掘金
+        著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+      </div>
+    </div>
+  </body>
+</html>
