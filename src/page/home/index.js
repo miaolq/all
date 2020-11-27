@@ -7,6 +7,7 @@ import Login from '../login'
 import Prop from '../test/Prop'
 import Portal from '../test/Portal'
 import Context from './context'
+import VL from '../virtual-list'
 import './style.scss'
 
 const { Header, Sider, Content } = Layout
@@ -19,6 +20,7 @@ const menu = [
   { to: '/test', label: 'test' },
   { to: '/portal', labrl: 'portal' },
   { to: '/context', label: 'context' },
+  { to: '/vl', label: 'vl' },
 ]
 
 export default function Home() {
@@ -58,7 +60,9 @@ export default function Home() {
           <Route path="/context">
             <Context />
           </Route>
-
+          <Route path="/vl">
+            <VL />
+          </Route>
           <Route path="/form/login">
             <Login />
           </Route>
