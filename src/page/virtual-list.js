@@ -6,7 +6,7 @@ function VirtualBox(props) {
 
 export default function Vl() {
   const [num, setNum] = useState(() => {
-    return Array(5000)
+    return Array(1000)
       .fill(1)
       .map((item, i) => i + 1)
   })

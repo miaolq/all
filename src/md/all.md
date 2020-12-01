@@ -144,3 +144,9 @@ You can overwrite/implement [[GetOwnProperty]] in the proxy by implementing getO
 1. 改变url： pushState replaceState
 2. 监听返回事件： popstate
 3. 监听后，通过react的context，传递给route组件，route根据path渲染。 Router就是context的provider
+
+
+react 长列表
+
+
+toString()  valueOf()
