@@ -19,7 +19,7 @@ module.exports = {
     // contentBasePublicPath: 'all',
   },
   entry: {
-    app: ['core-js', './src/index.js'],
+    app: ['core-js', './step/didact.js'],
   },
   resolve: {
     // modules: [path.resolve(__dirname, '../src'), 'node_modules'],
