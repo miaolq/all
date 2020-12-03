@@ -150,3 +150,6 @@ react 长列表
 
 
 toString()  valueOf()
+
+
+mobx 依赖收集，  react hooks也是依赖收集？

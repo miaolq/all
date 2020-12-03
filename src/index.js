@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import store from './redux'
 import Home from './page/home'
 import Login from './page/login'
+import Cube from './cube'
 import './style/root.scss'
 
 export default class App extends React.Component {
@@ -31,6 +32,7 @@ export default class App extends React.Component {
           <BrowserRouter basename="all">
             <Switch>
               <Route path="/login" component={Login} />
+              <Route path="/cube" component={Cube} />
               {/* Routes without a path always match. */}
               <Route component={Home} />
             </Switch>
