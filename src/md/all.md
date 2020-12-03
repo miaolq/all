@@ -29,6 +29,46 @@
 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ
 计算机网络 xiexiren
 
+deepClone https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript?rq=1
+
+
+js的加载、执行，阻塞dom树解析
+css 页面性能https://blog.logrocket.com/how-css-works-parsing-painting-css-in-the-critical-rendering-path-b3ee290762d3/
+
+prefetch
+async
+defer
+preload
+
+```js
+// 递归模版
+function recursion(level,params){
+   // 递归终止条件
+   if(level> MAX){
+      process_result 
+      return 
+   }
+   // 当前层处理逻辑
+   process(level,params)
+   // 进入下一层
+   recursion（level+1,params) 
+   //  如有需要，进行清理
+}
+
+```
+
+## 如何写递归代码
+1. 不要进行人肉递归
+2. 找最近重复子问题，抽象出重复性，规律
+3. 数学归纳法
+
+()
+(()) 1  ()()
+((()))  
+()(())
+(())()
+(()())
+()()()
 js,css load
 js,css 执行，解析
 阻塞，解析 dom
