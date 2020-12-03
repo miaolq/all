@@ -1,7 +1,10 @@
 /* eslint-disable react/no-deprecated */
 // https://pomb.us/build-your-own-react/
+// question
+// fiber的结构
 const txtEle = 'TEXT_ELEMENT'
 
+// 生成组件对象
 function createElement(type, props, ...children) {
   return {
     type,
@@ -12,6 +15,7 @@ function createElement(type, props, ...children) {
   }
 }
 
+// 生成文本对象
 function createTextElement(text) {
   return {
     type: txtEle,
@@ -22,53 +26,12 @@ function createTextElement(text) {
   }
 }
 
-function createDom(fiber) {
-  const { type, props } = fiber
-  const dom = type === txtEle ? document.createTextNode('') : document.createElement(type)
-  updateDom(dom, {}, props)
-  return dom
-}
-
-let nextUnitOfWork = null
-let wipRoot = null
-let currentRoot = null
-let deletions = null
-
-function render(element, container) {
-  wipRoot = {
-    dom: container,
-    props: {
-      children: [element],
-    },
-    alternate: currentRoot,
-  }
-
-  deletions = []
-  nextUnitOfWork = wipRoot
-}
-
-function commitWork(fiber) {
-  if (!fiber) {
-    return
-  }
-  const domParent = fiber.parent.dom
-  if (fiber.effectTag === 'PLACEMENT' && fiber.dom !== null) {
-    domParent.appendChild(fiber.dom)
-  } else if (fiber.effectTag === 'UPDATE' && fiber.dom !== null) {
-    updateDom(fiber.dom, fiber.alternate.props, fiber.props)
-  } else if (fiber.effectTag === 'DELETION') {
-    domParent.removeChild(fiber.dom)
-  }
-
-  commitWork(fiber.child)
-  commitWork(fiber.sibling)
-}
-
 const isEvent = (key) => key.startsWith('on')
 const isProperty = (key) => key !== 'children' && !isEvent(key)
 const isNew = (prev, next) => (key) => prev[key] !== next[key]
 const isGone = (prev, next) => (key) => !(key in next)
 
+// 初始化、更新dom，props和events
 function updateDom(dom, prevProps, nextProps) {
   // remove old or changed event listeners
   Object.keys(prevProps)
@@ -85,7 +48,6 @@ function updateDom(dom, prevProps, nextProps) {
     .forEach((name) => {
       dom[name] = ''
     })
-
   // set new or changed properties
   Object.keys(nextProps)
     .filter(isProperty)
@@ -93,7 +55,6 @@ function updateDom(dom, prevProps, nextProps) {
     .forEach((name) => {
       dom[name] = nextProps[name]
     })
-
   // add event listeners
   Object.keys(nextProps)
     .filter(isEvent)
@@ -104,9 +65,55 @@ function updateDom(dom, prevProps, nextProps) {
     })
 }
 
+// 创建dom，并挂载props，events
+function createDom(fiber) {
+  const { type, props } = fiber
+  const dom = type === txtEle ? document.createTextNode('') : document.createElement(type)
+  updateDom(dom, {}, props)
+  return dom
+}
+
+let nextUnitOfWork = null
+let wipRoot = null // todo
+let currentRoot = null
+let deletions = null
+
+function render(element, container) {
+  // 用mount的节点创建一个root-fiber
+  wipRoot = {
+    dom: container,
+    props: {
+      children: [element],
+    },
+    alternate: currentRoot,
+  }
+
+  deletions = []
+  nextUnitOfWork = wipRoot
+}
+
+// 根据更新后的fiber，更新dom
+function commitWork(fiber) {
+  if (!fiber) {
+    return
+  }
+  const domParent = fiber.parent.dom
+  if (fiber.effectTag === 'PLACEMENT' && fiber.dom !== null) {
+    domParent.appendChild(fiber.dom) // todo 这怎么就是替换了，不是新增吗
+  } else if (fiber.effectTag === 'UPDATE' && fiber.dom !== null) {
+    updateDom(fiber.dom, fiber.alternate.props, fiber.props)
+  } else if (fiber.effectTag === 'DELETION') {
+    domParent.removeChild(fiber.dom)
+  }
+
+  commitWork(fiber.child) // 递归更新child-fiber
+  commitWork(fiber.sibling) // 递归sibling-fiber
+}
+
 function commitRoot() {
   deletions.forEach(commitWork)
   commitWork(wipRoot.child)
+
   currentRoot = wipRoot
   wipRoot = null
 }
