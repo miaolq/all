@@ -15,3 +15,24 @@
 ## react 的 render 是深度优先遍历
 
 fiber之后： 被浏览器打断时，只挂载了一些节点，不好看
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+memory cache ; disk cache
