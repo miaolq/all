@@ -1,11 +1,19 @@
 /* eslint-disable react/no-deprecated */
 // https://pomb.us/build-your-own-react/
 // question
+
 // fiber的结构
 const txtEle = 'TEXT_ELEMENT'
 
+let open = false
+function debug() {
+  if (open) {
+    //
+  }
+}
 // 生成组件对象
 function createElement(type, props, ...children) {
+  debug()
   return {
     type,
     props: {
@@ -17,6 +25,7 @@ function createElement(type, props, ...children) {
 
 // 生成文本对象
 function createTextElement(text) {
+  debug()
   return {
     type: txtEle,
     props: {
@@ -33,6 +42,7 @@ const isGone = (prev, next) => (key) => !(key in next)
 
 // 初始化、更新dom，props和events
 function updateDom(dom, prevProps, nextProps) {
+  debug()
   // remove old or changed event listeners
   Object.keys(prevProps)
     .filter(isEvent)
@@ -67,6 +77,7 @@ function updateDom(dom, prevProps, nextProps) {
 
 // 创建dom，并挂载props，events
 function createDom(fiber) {
+  debug()
   const { type, props } = fiber
   const dom = type === txtEle ? document.createTextNode('') : document.createElement(type)
   updateDom(dom, {}, props)
@@ -79,6 +90,7 @@ let currentRoot = null
 let deletions = null
 
 function render(element, container) {
+  debug()
   // 用mount的节点创建一个root-fiber
   wipRoot = {
     dom: container,
@@ -94,69 +106,88 @@ function render(element, container) {
 
 // 根据更新后的fiber，更新dom
 function commitWork(fiber) {
+  debug()
   if (!fiber) {
     return
   }
   const domParent = fiber.parent.dom
-  if (fiber.effectTag === 'PLACEMENT' && fiber.dom !== null) {
+  if (fiber.effectTag === 'ADD' && fiber.dom !== null) {
     domParent.appendChild(fiber.dom) // todo 这怎么就是替换了，不是新增吗
+  } else if (fiber.effectTag === 'PLACEMENT') {
+    debugger
+    domParent.replaceChild(fiber.dom, fiber.alternate.dom)
   } else if (fiber.effectTag === 'UPDATE' && fiber.dom !== null) {
     updateDom(fiber.dom, fiber.alternate.props, fiber.props)
   } else if (fiber.effectTag === 'DELETION') {
     domParent.removeChild(fiber.dom)
   }
 
+  debug()
   commitWork(fiber.child) // 递归更新child-fiber
   commitWork(fiber.sibling) // 递归sibling-fiber
 }
 
 function commitRoot() {
+  debug()
   deletions.forEach(commitWork)
   commitWork(wipRoot.child)
 
-  currentRoot = wipRoot
-  wipRoot = null
+  currentRoot = wipRoot // 更新结束后，currentRoot指向新的root
+  wipRoot = null // working-in-progress-Root 指向null
 }
 
-function reconcileChildren(wipFiber, elements) {
+function reconcileChildren(wipFiber, propsChildren) {
+  debug()
   let index = 0
-  let oldFiber = wipFiber.alternate && wipFiber.alternate.child
+  let oldChildFiber = wipFiber.alternate && wipFiber.alternate.child
 
   let prevSibling = null
-  while (index < elements.length || oldFiber !== null) {
-    const element = elements[index]
+  while (index < propsChildren.length || !!oldChildFiber) {
+    const element = propsChildren[index] // 将children【0】与之前的fiber.child比较type
     let newFiber = null
 
-    const sameType = element && oldFiber && element.type === oldFiber.type
+    const sameType = element && oldChildFiber && element.type === oldChildFiber.type
 
     if (sameType) {
       // update oldFIber
       newFiber = {
-        type: oldFiber.type,
+        type: oldChildFiber.type,
         props: element.props,
-        dom: oldFiber.dom,
-        alternate: oldFiber,
+        dom: oldChildFiber.dom,
+        alternate: oldChildFiber,
         parent: wipFiber,
         effectTag: 'UPDATE',
       }
-    } else if (element && !sameType) {
+    } else if (element && oldChildFiber && !sameType) {
       // replace
+      newFiber = {
+        type: element.type,
+        props: element.props,
+        dom: null,
+        alternate: oldChildFiber,
+        parent: wipFiber,
+        effectTag: 'PLACEMENT',
+      }
+    } else if (element && !oldChildFiber && !sameType) {
+      // new
       newFiber = {
         type: element.type,
         props: element.props,
         dom: null,
         alternate: null,
         parent: wipFiber,
-        effectTag: 'PLACEMENT',
+        effectTag: 'ADD',
       }
-    } else if (oldFiber && !sameType) {
+    } else if (!element && oldChildFiber && !sameType) {
       // remove oldFiber
-      oldFiber.effectTag = 'DELETION'
-      deletions.push(oldFiber)
+      oldChildFiber.effectTag = 'DELETION'
+      deletions.push(oldChildFiber)
+    } else {
+      alert('bug')
     }
 
-    if (oldFiber) {
-      oldFiber = oldFiber.sibling
+    if (oldChildFiber) {
+      oldChildFiber = oldChildFiber.sibling
     }
 
     if (index === 0) {
@@ -171,36 +202,13 @@ function reconcileChildren(wipFiber, elements) {
 }
 
 function performUnitOfWork(fiber) {
-  // add dom node
+  debug()
   if (!fiber.dom) {
     fiber.dom = createDom(fiber)
   }
-  //   if (fiber.parent) {
-  //     fiber.parent.dom.appendChild(fiber.dom)
-  //   }
 
   const elements = fiber.props.children
   reconcileChildren(fiber, elements)
-  // let index = 0
-  // let prevSibling = null
-  // while (index < elements.length) {
-  //   const element = elements[index]
-
-  //   const newFiber = {
-  //     type: element.type,
-  //     props: element.props,
-  //     parent: fiber,
-  //     dom: null,
-  //   }
-
-  //   if (index === 0) {
-  //     fiber.child = newFiber
-  //   } else {
-  //     prevSibling.sibling = newFiber
-  //   }
-  //   prevSibling = newFiber
-  //   index++
-  // }
 
   if (fiber.child) {
     return fiber.child
@@ -213,16 +221,18 @@ function performUnitOfWork(fiber) {
     }
     nextFiber = nextFiber.parent
   }
+  return null
 }
 
 function workLoop(deadline) {
   let shouldYield = false
   while (nextUnitOfWork && shouldYield === false) {
+    debug()
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork)
     shouldYield = deadline.timeRemaining() < 1
   }
   if (!nextUnitOfWork && wipRoot) {
-    commitRoot()
+    commitRoot() // 没有单元工作，并且有wipRoot（render执行后才会有wipRoot），就提交root
   }
   window.requestIdleCallback(workLoop)
 }
@@ -250,5 +260,21 @@ const reactElement = (
   </div>
 )
 
+/** @jsx Didact.createElement */
+const reactElement2 = (
+  <div id="foo">
+    <p href="">pppp</p>
+    <div onClick={onClick}>
+      999
+      <input value="88" />
+    </div>
+  </div>
+)
+
 const container = document.getElementById('root')
 Didact.render(reactElement, container)
+
+setTimeout(() => {
+  // open = true
+  Didact.render(reactElement2, container)
+}, 2000)

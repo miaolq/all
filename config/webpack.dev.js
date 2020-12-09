@@ -19,9 +19,11 @@ module.exports = {
     // contentBasePublicPath: 'all',
   },
   entry: {
+    // app: ['core-js', './src/index.js'],
     app: ['core-js', './step/didact.js'],
   },
   resolve: {
+    extensions: ['.js', '.jsx'],
     // modules: [path.resolve(__dirname, '../src'), 'node_modules'],
     // alias: {
     //   src: path.resolve(__dirname, '../src'),
