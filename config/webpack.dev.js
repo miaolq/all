@@ -19,8 +19,8 @@ module.exports = {
     // contentBasePublicPath: 'all',
   },
   entry: {
-    // app: ['core-js', './src/index.js'],
-    app: ['core-js', './step/didact.js'],
+    app: ['core-js', './src/index.js'],
+    // app: ['core-js', './step/didact.js'],
   },
   resolve: {
     extensions: ['.js', '.jsx'],

@@ -8,6 +8,7 @@ import Prop from '../test/Prop'
 import Portal from '../test/Portal'
 import Context from './context'
 import VL from '../virtual-list'
+import Busy from '../busy'
 import './style.scss'
 
 const { Header, Sider, Content } = Layout
@@ -21,6 +22,7 @@ const menu = [
   { to: '/portal', labrl: 'portal' },
   { to: '/context', label: 'context' },
   { to: '/vl', label: 'vl' },
+  { to: '/busy', label: 'busy' },
 ]
 
 export default function Home() {
@@ -63,6 +65,7 @@ export default function Home() {
           <Route path="/vl">
             <VL />
           </Route>
+          <Route path="/busy" component={Busy} />
           <Route path="/form/login">
             <Login />
           </Route>
