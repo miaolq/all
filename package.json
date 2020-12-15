@@ -41,8 +41,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
+    "@babel/parser": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "@babel/traverse": "^7.11.0",
     "autoprefixer": "^10.0.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",

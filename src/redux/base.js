@@ -7,6 +7,7 @@
 // // 此外，抽出异步代码，可以与其他store结合。
 // // In addition, we often need to write some async logic that we know will be used with some store, eventually, but we don't know which store.
 // // 总之： 解偶、最佳实践。
+// 组件与action 创建 结偶，方便组件测试
 
 // // https://redux.js.org/advanced/middleware
 // // 在函数前后执行 1. 手动  2. 封装一个函数  3. 替换原函数，monkeypatch 4.

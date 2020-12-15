@@ -175,7 +175,7 @@ var reverseKGroup = function (head, k) {
   let i = 0
   let node = head
   while (node && i < k) {
-      let cur = node
+    let cur = node
   }
 
   function reverseLink(head) {
@@ -189,4 +189,24 @@ var reverseKGroup = function (head, k) {
     }
     return pre
   }
+}
+
+// 循环现需遍历
+var preorderTraversal = function (root) {
+  var stack = [root]
+  let res = []
+  while (stack) {
+    let last = stack.pop()
+    if (!last) {
+      return res
+    }
+    res.push(last.val)
+    if (last.right) {
+      stack.push(last.right)
+    }
+    if (last.left) {
+      stack.push(last.left)
+    }
+  }
+  return res
 }

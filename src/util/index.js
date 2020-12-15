@@ -11,3 +11,38 @@ export const filterKey = (obj) => {
 
   return res
 }
+
+export const throttle = (fn, gap) => {
+  let lastTime = 0
+  return function (...res) {
+    if (Date.now() - lastTime >= gap) {
+      const data = fn.call(this, ...res)
+      lastTime = Date.now()
+      return data
+    }
+  }
+}
+
+export const debounce = (fn, delay) => {
+  let timer = null
+  return function (...rest) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      timer = null
+      return fn(rest)
+    }, delay)
+  }
+}
+
+// export const extend = ()/*  */
+
+function B() {
+  return this
+}
+
+function A() {
+  return this
+}
+A.prototype = new B()

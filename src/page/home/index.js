@@ -7,7 +7,9 @@ import Login from '../login'
 import Prop from '../test/Prop'
 import Portal from '../test/Portal'
 import Context from './context'
+import Key from '../key'
 import VL from '../virtual-list'
+import RT from '../redux-thunk'
 import './style.scss'
 
 const { Header, Sider, Content } = Layout
@@ -21,6 +23,8 @@ const menu = [
   { to: '/portal', labrl: 'portal' },
   { to: '/context', label: 'context' },
   { to: '/vl', label: 'vl' },
+  { to: '/key', label: 'key' },
+  { to: '/thunk', label: 'thunk' },
 ]
 
 export default function Home() {
@@ -66,6 +70,10 @@ export default function Home() {
           <Route path="/form/login">
             <Login />
           </Route>
+          <Route path="/key">
+            <Key />
+          </Route>
+          <Route path="/thunk" component={RT} />
         </Content>
       </Layout>
     </Layout>

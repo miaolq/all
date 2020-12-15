@@ -1,6 +1,7 @@
 /* eslint-disable react/no-deprecated */
 // https://pomb.us/build-your-own-react/
 // question
+
 // fiber的结构
 const txtEle = 'TEXT_ELEMENT'
 
@@ -92,18 +93,32 @@ function render(element, container) {
   nextUnitOfWork = wipRoot
 }
 
+function commitDeletion(fiber, domParent) {
+  if (fiber.dom) {
+    domParent.removeChild(fiber.dom)
+  } else {
+    commitDeletion(fiber.child, domParent)
+  }
+}
+
 // 根据更新后的fiber，更新dom
 function commitWork(fiber) {
   if (!fiber) {
     return
   }
-  const domParent = fiber.parent.dom
+  let domParentFiber = fiber.parent
+  while (!domParentFiber.dom) {
+    domParentFiber = domParentFiber.parent
+  }
+  const domParent = domParentFiber.dom
+  
   if (fiber.effectTag === 'PLACEMENT' && fiber.dom !== null) {
     domParent.appendChild(fiber.dom) // todo 这怎么就是替换了，不是新增吗
   } else if (fiber.effectTag === 'UPDATE' && fiber.dom !== null) {
     updateDom(fiber.dom, fiber.alternate.props, fiber.props)
   } else if (fiber.effectTag === 'DELETION') {
-    domParent.removeChild(fiber.dom)
+    // domParent.removeChild(fiber.dom)
+    commitDeletion(fiber.child, domParent)
   }
 
   commitWork(fiber.child) // 递归更新child-fiber
@@ -123,7 +138,7 @@ function reconcileChildren(wipFiber, elements) {
   let oldFiber = wipFiber.alternate && wipFiber.alternate.child
 
   let prevSibling = null
-  while (index < elements.length || oldFiber !== null) {
+  while (index < elements.length || oldFiber) {
     const element = elements[index]
     let newFiber = null
 
@@ -151,6 +166,7 @@ function reconcileChildren(wipFiber, elements) {
       }
     } else if (oldFiber && !sameType) {
       // remove oldFiber
+      debugger
       oldFiber.effectTag = 'DELETION'
       deletions.push(oldFiber)
     }
@@ -170,45 +186,80 @@ function reconcileChildren(wipFiber, elements) {
   }
 }
 
-function performUnitOfWork(fiber) {
-  // add dom node
+let wipFiber = null
+let hookIndex = null
+
+function useState(initial) {
+  const oldHook =
+    wipFiber.alternate && wipFiber.alternate.hooks && wipFiber.alternate.hooks[hookIndex]
+  const hook = { state: oldHook ? oldHook.state : initial, queue: [] }
+
+  const actions = oldHook ? oldHook.queue : []
+  actions.forEach((action) => {
+    hook.state = action(hook.state)
+  })
+
+  
+
+  const setState = (action) => {
+    hook.queue.push(action)
+    wipRoot = {
+      dom: currentRoot.dom,
+      props: currentRoot.props,
+      alternate: currentRoot,
+    }
+    
+    nextUnitOfWork = wipRoot
+    deletions = []
+  }
+  wipFiber.hooks.push(hook)
+  ++hookIndex
+
+  return [hook.state, setState]
+}
+
+function updateFunctionComponent(fiber) {
+  wipFiber = fiber
+  hookIndex = 0
+  wipFiber.hooks = []
+
+  const children = [fiber.type(fiber.props)]
+  
+  reconcileChildren(fiber, children)
+}
+
+function updateHostComponent(fiber) {
   if (!fiber.dom) {
     fiber.dom = createDom(fiber)
   }
-  //   if (fiber.parent) {
-  //     fiber.parent.dom.appendChild(fiber.dom)
-  //   }
+  const elements = fiber.props.children
+  
+  reconcileChildren(fiber, elements)
+}
+
+function performUnitOfWork(fiber) {
+  // add dom node
+  const isFunctionComponent = fiber.type instanceof Function
+  if (isFunctionComponent) {
+    updateFunctionComponent(fiber)
+  } else {
+    updateHostComponent(fiber)
+  }
+
+  
 
   const elements = fiber.props.children
   reconcileChildren(fiber, elements)
-  // let index = 0
-  // let prevSibling = null
-  // while (index < elements.length) {
-  //   const element = elements[index]
-
-  //   const newFiber = {
-  //     type: element.type,
-  //     props: element.props,
-  //     parent: fiber,
-  //     dom: null,
-  //   }
-
-  //   if (index === 0) {
-  //     fiber.child = newFiber
-  //   } else {
-  //     prevSibling.sibling = newFiber
-  //   }
-  //   prevSibling = newFiber
-  //   index++
-  // }
 
   if (fiber.child) {
+    
     return fiber.child
   }
 
   let nextFiber = fiber
   while (nextFiber) {
     if (nextFiber.sibling) {
+      
       return nextFiber.sibling
     }
     nextFiber = nextFiber.parent
@@ -218,6 +269,7 @@ function performUnitOfWork(fiber) {
 function workLoop(deadline) {
   let shouldYield = false
   while (nextUnitOfWork && shouldYield === false) {
+    
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork)
     shouldYield = deadline.timeRemaining() < 1
   }
@@ -233,6 +285,7 @@ const Didact = {
   createElement,
   createTextElement,
   render,
+  useState,
 }
 
 const onClick = () => {
@@ -240,15 +293,20 @@ const onClick = () => {
 }
 
 /** @jsx Didact.createElement */
-const reactElement = (
-  <div id="foo">
-    <a href="">bar</a>
-    <div onClick={onClick}>
-      999
-      <input value="88" />
-    </div>
-  </div>
-)
+function App(props) {
+  const [count, setCount] = Didact.useState(1)
+  return <h1 onClick={() => setCount((pre) => pre + 1)}>{count}</h1>
+}
+const element = <App name="matt" />
+// const reactElement = (
+//   <div id="foo">
+//     <a href="">bar</a>
+//     <div onClick={onClick}>
+//       999
+//       <input value="88" />
+//     </div>
+//   </div>
+// )
 
 const container = document.getElementById('root')
-Didact.render(reactElement, container)
+Didact.render(element, container)
