@@ -92,4 +92,17 @@ function flat(arr) {
   }, [])
 }
 
+// undefined null bool number string Symbol BigInt ; Object
+// Date regex Bom ... 不考虑
+function deepClone(obj){
+  if(['undefined','boolean','number','string','symbol','bigint'].includes(typeof obj)||obj===null){
+    return obj
+  }
+  // array
+  if(Array.isArray(obj)){
+    return obj.map(item=>deepClone(item))
+  }
+  // 
+}
+
 console.log(flat(arr))
