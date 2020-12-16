@@ -23,6 +23,7 @@ module.exports = {
     app: ['core-js', './src/index.js'],
   },
   resolve: {
+    extensions: ['.js', '.jsx'],
     // modules: [path.resolve(__dirname, '../src'), 'node_modules'],
     // alias: {
     //   src: path.resolve(__dirname, '../src'),

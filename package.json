@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/miaolq/all#readme",
   "dependencies": {
-    "@ant-design/icons": "^4.2.2",
+    "@ant-design/icons": "^4.3.0",
     "@reduxjs/toolkit": "^1.4.0",
     "ali-oss": "^6.11.0",
     "antd": "^4.6.1",

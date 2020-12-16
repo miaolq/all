@@ -10,6 +10,7 @@ import Context from './context'
 import Key from '../key'
 import VL from '../virtual-list'
 import RT from '../redux-thunk'
+import Busy from '../busy'
 import './style.scss'
 
 const { Header, Sider, Content } = Layout
@@ -25,6 +26,7 @@ const menu = [
   { to: '/vl', label: 'vl' },
   { to: '/key', label: 'key' },
   { to: '/thunk', label: 'thunk' },
+  { to: '/busy', label: 'busy' },
 ]
 
 export default function Home() {
@@ -67,6 +69,7 @@ export default function Home() {
           <Route path="/vl">
             <VL />
           </Route>
+          <Route path="/busy" component={Busy} />
           <Route path="/form/login">
             <Login />
           </Route>
