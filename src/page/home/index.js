@@ -21,7 +21,7 @@ const menu = [
   { to: '/form', label: 'form' },
   { to: '/word', label: 'word' },
   { to: '/test', label: 'test' },
-  { to: '/portal', labrl: 'portal' },
+  { to: '/portal', label: 'portal' },
   { to: '/context', label: 'context' },
   { to: '/vl', label: 'vl' },
   { to: '/key', label: 'key' },
