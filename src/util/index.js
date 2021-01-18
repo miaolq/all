@@ -141,3 +141,10 @@ function deepClone(obj){
 }
 
 console.log(flat(arr))
+
+
+export const getExt = name => {
+  let dotIndex = name.lastIndexOf('.')
+  dotIndex = dotIndex === -1 ? name.length : dotIndex
+  return name.substring(dotIndex)
+}
