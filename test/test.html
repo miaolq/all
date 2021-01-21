@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        width: 800px;
+        margin: 200px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="module" src="https://cdn.skypack.dev/@babel/standalone"></script>
+
+    <script type="text/babel" data-type="module">
+      import React, { useState, useRef } from 'https://cdn.skypack.dev/react'
+      import ReactDOM from 'https://cdn.skypack.dev/react-dom'
+
+      alwaysOnePromiseGenerate.defaultReason = '新promise进入，此pormise被reject'
+      function alwaysOnePromiseGenerate(fn, rejectReason = alwaysOnePromiseGenerate.defaultReason) {
+        let outReject
+        return function (...rest) {
+          if (outReject) {
+            console.log(999, rejectReason)
+            outReject(rejectReason)
+            outReject = null
+          }
+          return Promise.race([
+            fn(...rest),
+            new Promise((resolve, reject) => {
+              outReject = reject
+              console.log(999999, outReject)
+            }),
+          ])
+        }
+      }
+
+      const quertApi = (data, delayTime) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(data)
+          }, delayTime)
+        })
+      }
+
+      const quertApiWrap = alwaysOnePromiseGenerate(quertApi)
+
+      function App() {
+        const [res, setRes] = useState(0)
+        const [delay, setDelay] = useState(1000)
+
+        const query = (data) => {
+          quertApiWrap(data, delay)
+            .then((returnData) => {
+              console.log('setstate', returnData)
+              setRes(returnData)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+
+        const onChange = (e) => {
+          const value = e.target.value
+          query(value, Number(value))
+        }
+
+        return (
+          <div>
+            <div>
+              delay:
+              <input onChange={(e) => setDelay(Number(e.target.value * 1000))} />
+            </div>
+            <div>
+              data:
+              <input onChange={onChange} />
+            </div>
+            <div>res:{res}</div>
+          </div>
+        )
+      }
+
+      const root = document.querySelector('#root')
+      ReactDOM.render(<App />, root)
+    </script>
+  </body>
+</html>

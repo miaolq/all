@@ -225,3 +225,4 @@ preloader
 # todo 
 1. applescript  ， bash 
 2. 效率。 同步
+3. eslint html script
