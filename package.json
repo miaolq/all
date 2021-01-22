@@ -4,10 +4,9 @@
   "description": "all life,work record",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
-    "test-stat": "cross-env P_ENV=test NODE_ENV=production webpack"
+    "test-stat": "cross-env NODE_ENV=production webpack"
   },
   "browserslist": "defaults",
   "repository": {
