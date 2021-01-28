@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --open",
-    "build": "cross-env NODE_ENV=production webpack",
-    "test-stat": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "browserslist": "defaults",
   "repository": {
@@ -68,7 +67,7 @@
     "mini-css-extract-plugin": "^0.11.2",
     "postcss": "^8.0.6",
     "postcss-loader": "^4.0.2",
-    "prettier": "^2.0.5",
+    "prettier": "^2.2.1",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.0",
     "style-loader": "^1.2.1",

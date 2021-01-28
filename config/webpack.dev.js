@@ -3,17 +3,17 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 
+const projectDir = path.resolve(__dirname, '..')
+
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    port: 3333,
+    port: 3332,
     hot: true,
     hotOnly: true,
-    historyApiFallback: {
-      rewrites: [{ from: /^\/all\//, to: '/all/' }],
-    }, // 返回根目录，防止404
-    publicPath: '/all/',
+    historyApiFallback: true, // 返回根目录，防止404
+    publicPath: '/',
     // public: '192.168.23.41',
     // contentBase: path.join(__dirname, 'dist'),
     // contentBasePublicPath: 'all',
@@ -31,8 +31,8 @@ module.exports = {
   },
   output: {
     filename: '[name].[hash].js',
-    path: path.resolve(__dirname, '../dist'), // 得是绝对路径
-    publicPath: '/all/', // 尽量与devServer的publicPath对应，否则三层路径有问题
+    path: path.resolve(projectDir, 'dist'), // 得是绝对路径
+    publicPath: '/', // 尽量与devServer的publicPath对应，否则三层路径有问题
   },
   // externals: {
   //   react: 'React',
@@ -55,6 +55,10 @@ module.exports = {
     new HtmlWebpackPlugin({ template: './public/index.html' }),
     new webpack.DefinePlugin({
       GOOD: JSON.stringify('//good-oss.oss-cn-shanghai.aliyuncs.com'),
+      AUTO_ROUTE: '<Route path="/ar/app" component={App} />',
+      // webpack.DefinePlugin.runtimeValue(() => {
+      //   return `<Route path="/ar/app" component={App} />`
+      // }, []),
     }),
   ],
   module: {
@@ -73,7 +77,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              additionalData: `@import "${path.resolve(__dirname, '../src/style/_var.scss')}";`,
+              additionalData: `@import "${path.resolve(projectDir, 'src/style/_var.scss')}";`,
             },
           },
         ],

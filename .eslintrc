@@ -29,6 +29,7 @@
   },
   "plugins": ["react"], // eslint-plugin-react
   "rules": {
+    "no-unused-vars": "warn",
     "react/jsx-filename-extension": "off",
     "no-unused-expressions": "off",
     "camelcase": "off",
@@ -40,6 +41,7 @@
   // ignorePattern: ["/dist/*.js"],
   // excludedFiles: ["/dist/*.js"],
   "globals": {
-    "GOOD": "readonly"
+    "GOOD": "readonly",
+    "AUTO_ROUTE": "readonly"
   }
 }
