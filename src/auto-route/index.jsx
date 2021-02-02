@@ -1,11 +1,21 @@
 import React from 'react'
-import App from './app'
+import { Route } from 'react-router'
+import { paramCase } from 'change-case'
+import { getNameExt } from '../util'
 
-export default function () {
+export default function Index() {
+  const list = []
+  const data = require.context('.', true, /.+\.jsx?$/)
+  data.keys().forEach((key) => {
+    const { name } = getNameExt(key)
+    list.push({ path: paramCase(name), component: data(key).default })
+  })
+
   return (
-    <div>
-      ar
-      {AUTO_ROUTE}
-    </div>
+    <>
+      {list.map((item) => {
+        return <Route key={item.path} path={`/ar/${item.path}`} component={item.component} />
+      })}
+    </>
   )
 }
