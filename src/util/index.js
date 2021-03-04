@@ -6,3 +6,11 @@ export const getNameExt = (name) => {
     ext: name.substring(dotIndex),
   }
 }
+
+export const endsWithImg = (name) => {
+  return /\.(png|jpe?g|gif|svg)$/.test(name)
+}
+
+export const isImgType = (file) => {
+  return file.type.startsWith('image/')
+}

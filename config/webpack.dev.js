@@ -25,9 +25,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     // modules: [path.resolve(__dirname, '../src'), 'node_modules'],
-    // alias: {
-    //   src: path.resolve(__dirname, '../src'),
-    // },
+    alias: {
+      src: path.resolve(__dirname, '../src/'),
+    },
   },
   output: {
     filename: '[name].[hash].js',
@@ -51,6 +51,9 @@ module.exports = {
     },
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      U: [path.resolve(__dirname, '../src/util/index.js'), 'default'],
+    }),
     // HtmlWebpackPlugin默认使用ejs loader . 支持lodash template语法
     new HtmlWebpackPlugin({ template: './public/index.html' }),
     new webpack.DefinePlugin({
