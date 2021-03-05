@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/lib/locale/zh_CN'
 import store from './redux/index'
 import AutoRoute from './auto-route'
 import './style/root.scss'
@@ -31,18 +33,19 @@ export default class App extends React.Component {
 
     return (
       <React.StrictMode>
-        sss
-        <Provider store={store}>
-          <BrowserRouter>
-            <Switch>
-              <Route path="/ar" component={AutoRoute} />
-              {/* <Route path="/login" component={Login} /> */}
-              {/* <Route path="/cube" component={Cube} /> */}
-              {/* Routes without a path always match. */}
-              {/* <Route component={Home} /> */}
-            </Switch>
-          </BrowserRouter>
-        </Provider>
+        <ConfigProvider locale={zhCN}>
+          <Provider store={store}>
+            <BrowserRouter>
+              <Switch>
+                <Route path="/ar" component={AutoRoute} />
+                {/* <Route path="/login" component={Login} /> */}
+                {/* <Route path="/cube" component={Cube} /> */}
+                {/* Routes without a path always match. */}
+                {/* <Route component={Home} /> */}
+              </Switch>
+            </BrowserRouter>
+          </Provider>
+        </ConfigProvider>
       </React.StrictMode>
     )
   }
