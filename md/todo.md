@@ -16,3 +16,5 @@
 - rss
 - postion sticky 和 https://github.com/wilddeer/stickyfill
 - 知乎收藏搜索
+
+- https://zh-hans.reactjs.org/docs/strict-mode.html react 开发模式render两次 https://github.com/facebook/react/issues/17786  ？？？？
