@@ -5,6 +5,14 @@
 
 - webpack 无需导入来使用全局常量、工具函数，采用 ProvidePlugin， 但是没有提示，采用 code snippet 方便导入， 项目级别的 code snippet
 - https://zhuanlan.zhihu.com/p/50335551
-- 利用同步的setState
+- 利用同步的 setState
 
-- all 分支和 clean分支
+- all 分支和 clean 分支
+- all-in-one one
+
+- intersectionobserver https://github.com/w3c/IntersectionObserver/issues"
+- resize-observer-polyfill
+- tmp 目录每次重启清空
+- rss
+- postion sticky 和 https://github.com/wilddeer/stickyfill
+- 知乎收藏搜索
