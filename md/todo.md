@@ -16,3 +16,9 @@
 - rss
 - postion sticky 和 https://github.com/wilddeer/stickyfill
 - 知乎收藏搜索
+
+
+
+1. 业务kt 需求
+2. 开发人员回去设计详细方案，各种状态流转
+3. 再次开会讨论方案实施，阶段排期
