@@ -17,4 +17,8 @@
 - postion sticky 和 https://github.com/wilddeer/stickyfill
 - 知乎收藏搜索
 
-- https://zh-hans.reactjs.org/docs/strict-mode.html react 开发模式render两次 https://github.com/facebook/react/issues/17786  ？？？？
+- https://zh-hans.reactjs.org/docs/strict-mode.html react 开发模式 render 两次 https://github.com/facebook/react/issues/17786 ？？？？
+
+- 利用同步的 setState
+
+- 魔方： 容器组件需要定制，和使用方不一致。1. 容器组件可能没有高度 2. 需要使用拖拽的方式加入子组件

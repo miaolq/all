@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { DragSource } from 'react-dnd';
 import { Icon, Form, Input, Switch, Modal } from 'antd';
 import cls from 'classnames';
-import drag from '@sites/util/drag';
 import './style.scss';
 
 const dragEvent = {
@@ -153,4 +152,4 @@ class Zone extends PureComponent {
     );
   }
 }
-export default DragSource(drag.HOTZONE, dragEvent, dragCollect)(Zone);
+export default DragSource('HOTZONE', dragEvent, dragCollect)(Zone);

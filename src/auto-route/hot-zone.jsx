@@ -1,5 +1,5 @@
-// import HotZone from './HotZone'
+import HotZone from './HotZone'
 
-export default () => 1
+export default HotZone
 
 export const label = '热区选择'

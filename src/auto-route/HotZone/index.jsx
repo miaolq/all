@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Modal, Button, message } from 'antd'
+import { DndProvider, useDrag, useDrop } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import Zone from './Zone'
 import './style.scss'
 
@@ -170,7 +172,7 @@ class HotZone extends PureComponent {
     this.toggleVisible()
   }
 
-  toPercentZoneList = (zoneList) => {
+  toPercentZoneList = (zoneList = []) => {
     return zoneList.map((item) => {
       const { left, top, width, height } = item
       return {
@@ -183,7 +185,7 @@ class HotZone extends PureComponent {
     })
   }
 
-  toPxZoneList = (zoneList) => {
+  toPxZoneList = (zoneList = []) => {
     return zoneList.map((item) => {
       const { left, top, width, height } = item
       return {
@@ -248,83 +250,85 @@ class HotZone extends PureComponent {
       maxWidth = init.width
       maxHeight = init.height
     }
-    const { src } = this.props
+    const { src = 'https://miro.medium.com/max/1200/1*6v0VjyiKNaLp0ounI3pNbA.jpeg' } = this.props
     return (
-      <div className="cube-hotzone-wrapper">
-        <Button onClick={this.toggleVisible}>热区编辑</Button>
-        <Modal
-          maskClosable={false}
-          width={800}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          visible={visible}
-          className="cube-hotzone-modal"
-        >
-          <div className="wrapper">
-            <div className="wrapper-left">
-              <div
-                draggable={false}
-                className="img-wrapper"
-                ref={(ref) => {
-                  this.ref = ref
-                }}
-                onMouseDown={this.onMouseDown}
-              >
-                <img
-                  onLoad={this.onImgLoad}
-                  ref={(ref) => {
-                    this.imgRef = ref
-                  }}
+      <DndProvider backend={HTML5Backend}>
+        <div className="cube-hotzone-wrapper">
+          <Button onClick={this.toggleVisible}>热区编辑</Button>
+          <Modal
+            maskClosable={false}
+            width={800}
+            onOk={this.onOk}
+            onCancel={this.onCancel}
+            visible={visible}
+            className="cube-hotzone-modal"
+          >
+            <div className="wrapper">
+              <div className="wrapper-left">
+                <div
                   draggable={false}
-                  className="cube-hotzone-img"
-                  src={src}
-                  alt=""
-                />
+                  className="img-wrapper"
+                  ref={(ref) => {
+                    this.ref = ref
+                  }}
+                  onMouseDown={this.onMouseDown}
+                >
+                  <img
+                    onLoad={this.onImgLoad}
+                    ref={(ref) => {
+                      this.imgRef = ref
+                    }}
+                    draggable={false}
+                    className="cube-hotzone-img"
+                    src={src}
+                    alt=""
+                  />
+                  {zoneList.map((item, index) => {
+                    return (
+                      <Zone
+                        changeZone={this.changeZone}
+                        addZoneInstance={this.addZoneInstance}
+                        onDelete={this.onDelete}
+                        key={item.key}
+                        index={index}
+                        minLength={this.minLength}
+                        maxWidth={maxWidth}
+                        maxHeight={maxHeight}
+                        onDragEnd={this.onDragEnd}
+                        data={item}
+                      />
+                    )
+                  })}
+                  <div
+                    key={-1}
+                    ref={(ref) => {
+                      this.zoneRef = ref
+                    }}
+                    style={{ display: 'none' }}
+                    className="cube-hotzone-zone"
+                  />
+                </div>
+              </div>
+              <div className="wrapper-right">
                 {zoneList.map((item, index) => {
                   return (
-                    <Zone
-                      changeZone={this.changeZone}
-                      addZoneInstance={this.addZoneInstance}
-                      onDelete={this.onDelete}
-                      key={item.key}
-                      index={index}
-                      minLength={this.minLength}
-                      maxWidth={maxWidth}
-                      maxHeight={maxHeight}
-                      onDragEnd={this.onDragEnd}
-                      data={item}
-                    />
+                    <div className="zone-block" key={item.key}>
+                      <div>热区{index + 1}</div>
+                      <div>
+                        链接：
+                        <a href={item.link} target="_blank" rel="noopener noreferrer">
+                          {item.link}
+                        </a>
+                      </div>
+                      <div>是否打开新页面：{item._blank ? '是' : '否'}</div>
+                    </div>
                   )
                 })}
-                <div
-                  key={-1}
-                  ref={(ref) => {
-                    this.zoneRef = ref
-                  }}
-                  style={{ display: 'none' }}
-                  className="cube-hotzone-zone"
-                />
               </div>
             </div>
-            <div className="wrapper-right">
-              {zoneList.map((item, index) => {
-                return (
-                  <div className="zone-block" key={item.key}>
-                    <div>热区{index + 1}</div>
-                    <div>
-                      链接：
-                      <a href={item.link} target="_blank" rel="noopener noreferrer">
-                        {item.link}
-                      </a>
-                    </div>
-                    <div>是否打开新页面：{item._blank ? '是' : '否'}</div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </Modal>
-      </div>
+          </Modal>
+        </div>
+      </DndProvider>
     )
   }
 }
