@@ -17,8 +17,15 @@
 - postion sticky 和 https://github.com/wilddeer/stickyfill
 - 知乎收藏搜索
 
-
-
-1. 业务kt 需求
+1. 业务 kt 需求
 2. 开发人员回去设计详细方案，各种状态流转
 3. 再次开会讨论方案实施，阶段排期
+
+# code 约定
+
+- 业务逻辑正常 0
+- 业务逻辑错误， 代码错误等， 通用提示 大于 20000
+- 每个接口特殊处理的 code 10001 10002 等
+
+- eslint 可以检测出 import/cycle
+- form 表单 trim
