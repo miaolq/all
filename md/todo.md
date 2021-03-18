@@ -34,3 +34,26 @@
 - 利用同步的 setState
 
 - 魔方： 容器组件需要定制，和使用方不一致。1. 容器组件可能没有高度 2. 需要使用拖拽的方式加入子组件
+
+- 手写 throttle debounce
+ - 常用hook  useinterval 
+ function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // 保存新回调
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  // 建立 interval
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) { // 可暂停
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
