@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
+import resource from './resource.slice'
 
 export default configureStore({
-  reducer: (state = { a: 1 }) => {
-    return state
+  reducer: {
+    resource,
   },
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware()
-  },
+  // middleware: (getDefaultMiddleware) => {
+  //   return getDefaultMiddleware()
+  // },
 })
