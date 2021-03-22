@@ -2,15 +2,12 @@ import React from 'react'
 
 const l1 = 'l1'
 const arr = [
-  [l1, '5年前端开发经验'],
+  [l1, '5年前端开发经验，英语水平六级'],
   [l1, '熟悉react技术栈，了解react,redux,react-router原理'],
   [l1, '熟练使用react hook,善于提取组件，封装hook'],
-  [l1, '掌握前端安全、性能、缓存相关知识'],
-  [l1, '了解前端工程化，能够基于webpack从零开始搭建环境，了解plugin,loader'],
-  [l1, '熟悉http协议相关，了解计算机网络知识'],
-  [l1, '了解浏览器原理'],
-  [l1, '写过小程序，nodejs，java'],
-  [l1, '英语水平六级'],
+  [l1, '掌握前端安全、性能、缓存、网络相关知识'],
+  [l1, '了解前端工程化，能够基于webpack从零开始搭建开发环境'],
+  [l1, '了解浏览器原理，有小程序，nodejs，java开发经验'],
 ]
 
 const job = [

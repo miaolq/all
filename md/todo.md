@@ -36,24 +36,49 @@
 - 魔方： 容器组件需要定制，和使用方不一致。1. 容器组件可能没有高度 2. 需要使用拖拽的方式加入子组件
 
 - 手写 throttle debounce
- - 常用hook  useinterval 
- function useInterval(callback, delay) {
+- 常用 hook useinterval
+  function useInterval(callback, delay) {
   const savedCallback = useRef();
 
-  // 保存新回调
-  useEffect(() => {
-    savedCallback.current = callback;
-  });
+// 保存新回调
+useEffect(() => {
+savedCallback.current = callback;
+});
 
-  // 建立 interval
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) { // 可暂停
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
+// 建立 interval
+useEffect(() => {
+function tick() {
+savedCallback.current();
+}
+if (delay !== null) { // 可暂停
+let id = setInterval(tick, delay);
+return () => clearInterval(id);
+}
+}, [delay]);
 }
 
+- requestPayment-api 轮训订单状态
+- 小程序 支付，测评，游标尺。 日期 多选 单选 输入 返回修改 。 兼容，合并
+  shell 脚本，拷贝和删除文件，
+  api 的兼容，将 callback 形式转为 promise
+  老项目使用 wx.fetch，wx.fetch 内部做了 token 过期重新登录等逻辑，所以 xinxiangku
+  function promisify(func, params) {
+  return new Promise((resolve, reject) => {
+  func({
+  ...params,
+  success: (res) => resolve({ ok: true, data: res }),
+  fail: () => reject({ ok: false })
+  })
+  })
+  }
+
+- marquee html
+- ruler 组件
+
+运营系统
+
+- 通过 promise.race 的方式 解决输入查询的竞态问题
+- redux 结合 自定义的 useResource Hook 解决多个组件使用同个公共资源，请求多次的问题
+- routes()解决了路由过多，字符串拼接方式，后续修改容易遗漏的问题
+- LoadingBtn，Modal.confirm 防止连续点击
+- scss resource
