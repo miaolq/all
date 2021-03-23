@@ -7,7 +7,7 @@ const arr = [
   [l1, '熟练使用react hook,善于提取组件，封装hook'],
   [l1, '掌握前端安全、性能、缓存、网络相关知识'],
   [l1, '了解前端工程化，能够基于webpack从零开始搭建开发环境'],
-  [l1, '了解浏览器原理，有小程序，nodejs，java开发经验'],
+  [l1, '了解浏览器原理，有小程序，vue，nodejs，java开发经验'],
 ]
 
 const job = [
@@ -28,7 +28,7 @@ const pro = [
       'b. 采用函数来返回路径，方便搜索，解决运营系统页面较多，字符串拼接式的路径，后续改动容易遗漏的问题',
       'c. 封装了LoadingBtn组件，Modal.confirm函数来防止表单重复提交',
       'd. 配置sass-loader的addtionalData解决需要手动导入scss变量文件的问题',
-      'e. 封装函数，方便解决输入查询等原因导致的竞态问题',
+      'e. 封装函数，解决输入查询等原因导致的竞态问题',
     ],
   },
   {
@@ -68,11 +68,22 @@ export default function Resume() {
     <div>
       <h1>苗林强的前端简历</h1>
       <div className="t1">个人信息</div>
-      <div className="l1">2016年6月毕业于南京信息工程大学，计算机科学与技术专业</div>
+      <div className="l1">本科/南京信息工程大学/计算机系 2012.9 - 2016.6</div>
       <div className="l1">手机：13916645108 邮箱：linqiang.miao@qq.com</div>
+      <div className="l1">github：https://github.com/miaolq</div>
+
       <div className="t1">个人优势</div>
     </div>
   )
 }
-includesBigUnicode 倒计时
-ruler marquee 测评 迁移
+
+// includesBigUnicode 倒计时s
+// ruler marquee 测评 迁移
+
+// 支持scss postcss,autoprefixer
+// browserslist
+// babel  core-js
+// eslint prettier,
+// 通过 eslint-config-prettier 解决了eslint prettier冲突问题
+// 支持热更新
+// require.context 支持文件夹内jsx自动导入

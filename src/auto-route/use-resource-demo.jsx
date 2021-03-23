@@ -6,7 +6,7 @@ export default function D() {
   const { data, dataLoading } = useResource('users')
 
   return (
-    <div>
+    <div>as
       {data.length}
       {dataLoading + ''}
       <Child />
