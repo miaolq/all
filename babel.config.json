@@ -1,0 +1,25 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "corejs": {
+          "version": "3.6",
+          "proposals": true
+        }
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": "css"
+      }
+    ],
+    "@babel/plugin-proposal-class-properties"
+  ]
+}

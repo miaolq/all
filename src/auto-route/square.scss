@@ -1,0 +1,27 @@
+input {
+  width: 300px;
+}
+
+.square {
+  display: inline-block;
+  position: relative;
+  background: url(https://good-oss.oss-cn-shanghai.aliyuncs.com/goods/coin.png);
+  background-size: 100% 100%;
+
+  &::after {
+    content: '';
+    padding-top: 100%;
+    display: block;
+  }
+  &-content {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    right: 20px;
+    transform: translateY(-50%);
+  }
+  &-hidden {
+    height: 0;
+    opacity: 0;
+  }
+}
