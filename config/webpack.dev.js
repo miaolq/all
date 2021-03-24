@@ -14,7 +14,6 @@ module.exports = {
     hotOnly: true,
     historyApiFallback: true, // 返回根目录，防止404
     publicPath: '/',
-    // public: '192.168.23.41',
     // contentBase: path.join(__dirname, 'dist'),
     // contentBasePublicPath: 'all',
   },
@@ -58,10 +57,6 @@ module.exports = {
     new HtmlWebpackPlugin({ template: './public/index.html' }),
     new webpack.DefinePlugin({
       GOOD: JSON.stringify('//good-oss.oss-cn-shanghai.aliyuncs.com'),
-      AUTO_ROUTE: '<Route path="/ar/app" component={App} />',
-      // webpack.DefinePlugin.runtimeValue(() => {
-      //   return `<Route path="/ar/app" component={App} />`
-      // }, []),
     }),
   ],
   module: {
