@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/lib/locale/zh_CN'
 import store from './redux/index'
-import AutoRoute from './auto-route'
+import AutoRoute from './auto-route/index.jsx'
 import './style/root.scss'
 
 export default class App extends React.Component {
@@ -20,6 +20,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log('app render')
     const { error, errorInfo } = this.state
     if (error || errorInfo) {
       return (
